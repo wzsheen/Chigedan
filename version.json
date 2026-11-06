@@ -1,5 +1,6 @@
 {
-  "version": "0.0.4",
-  "notes": "- 更新食物营养数据库，新增约 1500 种食物数据。\n- 优化食物分类、搜索和份量调整。\n- 更新常见食物图标，改进常吃排序。\n- 修复分类列表显示问题。",
-  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.4/Chigedan-v0.0.4-android.apk"
+  "version": "0.0.5",
+  "notes": "- 新增快捷记，写句话点勾自动识别，支持手动记和拍照记切换。\n- 优化 AI 识别，关闭拍照思考模式、补齐食库匹配并记录云端和客户端耗时。\n- 调整内置 AI 额度，三项服务每人每天各 5 次，全站每天 500 次。\n- 扩充食库，新增 460 条成品配方并接入记一餐搜索与手动输入。\n- 优化计划与餐食明细，新增数字键盘并清楚展示数量、热量和营养素。\n- 统一 AI 卡片状态色、优化照片预览，修复语音整理分类列表显示。
+",
+  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.5/Chigedan-v0.0.5-android.apk"
 }
