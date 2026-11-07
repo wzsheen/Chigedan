@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
-  "notes": "- 新增快捷记，写句话点勾自动识别，支持手动记和拍照记切换。\n- 优化 AI 识别，关闭拍照思考模式、补齐食库匹配并记录云端和客户端耗时。\n- 调整内置 AI 额度，三项服务每人每天各 5 次，全站每天 500 次。\n- 扩充食库，新增 460 条成品配方并接入记一餐搜索与手动输入。\n- 优化计划与餐食明细，新增数字键盘并清楚展示数量、热量和营养素。\n- 统一 AI 卡片状态色、优化照片预览，修复语音整理分类列表显示。",
-  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.5/Chigedan-v0.0.5-android.apk"
+  "version": "0.0.6",
+  "notes": "- 修复 AI 估算超时，10 秒内出结果。\n- 优化额度显示，按真实剩余展示且失败不扣次数。\n- 扩充食物库份量与别名，搜索匹配更准。\n- 扩充科普内容至 16 篇，按四类重排并全部重绘配图。\n- 新增首页打卡学习入口与 6 条科普提示轮播（App 端）。\n- 修复快捷记灰字抢先出现、趋势页蛋仔错位与图解遮挡。",
+  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.6/Chigedan-v0.0.6-android.apk"
 }
