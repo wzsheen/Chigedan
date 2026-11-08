@@ -1,5 +1,6 @@
 {
-  "version": "0.0.6",
-  "notes": "- 修复 AI 估算超时，10 秒内出结果。\n- 优化额度显示，按真实剩余展示且失败不扣次数。\n- 扩充食物库份量与别名，搜索匹配更准。\n- 扩充科普内容至 16 篇，按四类重排并全部重绘配图。\n- 新增首页打卡学习入口与 6 条科普提示轮播（App 端）。\n- 修复快捷记灰字抢先出现、趋势页蛋仔错位与图解遮挡。",
-  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.6/Chigedan-v0.0.6-android.apk"
+  "version": "0.0.7",
+  "notes": "- 修复份量换算。\n- 历史上算错的热量在启动时自动纠正。\n- 「常吃」改为按真正吃过的次数排序。\n- 首页饮水卡片增加可展开可删除今日记录。\n- 修复饮食科普页若干小问题。\n- 修复基础信息编辑及同步混乱问题。
+",
+  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.7/Chigedan-v0.0.7-android.apk"
 }
