@@ -1,6 +1,5 @@
 {
   "version": "0.0.7",
-  "notes": "- 修复份量换算。\n- 历史上算错的热量在启动时自动纠正。\n- 「常吃」改为按真正吃过的次数排序。\n- 首页饮水卡片增加可展开可删除今日记录。\n- 修复饮食科普页若干小问题。\n- 修复基础信息编辑及同步混乱问题。
-",
+  "notes": "- 修复份量换算。\n- 历史上算错的热量在启动时自动纠正。\n- 「常吃」改为按真正吃过的次数排序。\n- 首页饮水卡片增加可展开可删除今日记录。\n- 修复饮食科普页若干小问题。\n- 修复基础信息编辑及同步混乱问题。",
   "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.7/Chigedan-v0.0.7-android.apk"
 }
