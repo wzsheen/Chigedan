@@ -1,5 +1,5 @@
 {
-  "version": "0.0.7",
-  "notes": "- 修复份量换算。\n- 历史上算错的热量在启动时自动纠正。\n- 「常吃」改为按真正吃过的次数排序。\n- 首页饮水卡片增加可展开可删除今日记录。\n- 修复饮食科普页若干小问题。\n- 修复基础信息编辑及同步混乱问题。",
-  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.7/Chigedan-v0.0.7-android.apk"
+  "version": "0.0.8",
+  "notes": "- 内置 AI 默认开启，装好即可拍照、语音记餐和估算营养。\n- 本餐清单点任一条可弹出分量面板，滑杆 10 克起、按 1 克吸附。\n- 首页未设置目标时常驻闪烁提示。\n- 小程序恢复转发和朋友圈分享。\n- 本餐清单每条只显示重量、热量和营养素。\n- 目标页体重框底色与身高统一。\n- 小程序隐藏检查更新等用不上的入口。\n- AI 服务页说明改为写清每项具体做什么。",
+  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.0.8/Chigedan-v0.0.8-android.apk"
 }
