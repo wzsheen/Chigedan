@@ -154,4 +154,6 @@ APK 通过 [GitHub Releases](https://github.com/wzsheen/Chigedan/releases/latest
 
 ## 许可
 
-仓库目前未声明开源许可。如需在别的项目里使用代码，请先通过 Issue 联系作者。
+代码以 [MIT 许可证](LICENSE) 授权，可自由使用、修改、分发，包括商业用途，保留版权声明即可。
+
+**数据部分有例外。** `utils/china-food-data.js` 中相当一部分条目标注来源为《中国食物成分表》第 6 版（杨月欣主编，北京大学医学出版社），该数据汇编的著作权归原出版方，不在本项目的 MIT 授权范围内，此处仅供 App 功能演示。`utils/beverage-data.js` 来自 USDA SR Legacy，属公有领域，可自由使用。如果你要在自己的项目里使用这些营养数据，请自行取得相应授权。
