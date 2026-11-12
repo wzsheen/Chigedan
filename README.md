@@ -1,20 +1,20 @@
-<p align="center">  
-  <img src="docs/images/banner.jpg" alt="吃个蛋食记：记录每一餐，吃出更好的自己" width="100%">  
+<p align="center">
+  <img src="docs/images/banner.jpg" alt="吃个蛋食记：记录每一餐，吃出更好的自己" width="100%">
 </p>
 
-<p align="center">  
-  <a href="https://github.com/wzsheen/Chigedan/releases/latest"><b>下载 Android 版</b></a>  
-  \&nbsp;·\&nbsp;  
-  <a href="#快速开始">自己跑起来</a>  
-  \&nbsp;·\&nbsp;  
-  <a href="https://github.com/wzsheen/Chigedan/issues">反馈问题</a>  
+<p align="center">
+  <a href="https://github.com/wzsheen/Chigedan/releases/latest"><b>下载 Android 版</b></a>
+  &nbsp;·&nbsp;
+  <a href="#快速开始">自己跑起来</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/wzsheen/Chigedan/issues">反馈问题</a>
 </p>
 
-<p align="center">  
-  <img src="https://img.shields.io/badge/platform-WeChat%20Mini%20Program-07C160?style=flat-square" alt="平台">  
-  <img src="https://img.shields.io/badge/Android-8.0%2B-2EA44F?style=flat-square" alt="Android">  
-  <img src="https://img.shields.io/badge/storage-local%20only-B07A15?style=flat-square" alt="本地存储">  
-  <img src="https://img.shields.io/badge/dependencies-none-6E7681?style=flat-square" alt="无依赖">  
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-WeChat%20Mini%20Program-07C160?style=flat-square" alt="平台">
+  <img src="https://img.shields.io/badge/Android-8.0%2B-2EA44F?style=flat-square" alt="Android">
+  <img src="https://img.shields.io/badge/storage-local%20only-B07A15?style=flat-square" alt="本地存储">
+  <img src="https://img.shields.io/badge/dependencies-none-6E7681?style=flat-square" alt="无依赖">
 </p>
 
 吃个蛋食记是一款**本地优先**的饮食记录小程序。拍一张照、或者说一句「两个包子一杯豆浆」，就能记下一餐；热量、蛋白质、碳水、脂肪自动结算，剩下的额度当场就能看见。
@@ -23,10 +23,10 @@
 
 ## 截图
 
-|                            今日                           |                           记一餐                           |                            趋势                            |
-| :-----------------------------------------------------: | :-----------------------------------------------------: | :------------------------------------------------------: |
+| 今日 | 记一餐 | 趋势 |
+| :---: | :---: | :---: |
 | <img src="docs/images/home.jpg" width="228" alt="今日页面"> | <img src="docs/images/log.jpg" width="228" alt="记一餐页面"> | <img src="docs/images/trend.jpg" width="228" alt="趋势页面"> |
-|                  目标、剩余、三大营养素<br />一屏看完                  |                   搜食物、调份量<br />核对清单再保存                  |                  日历热力图<br />与 7 / 30 天曲线                 |
+| 目标、剩余、三大营养素<br>一屏看完 | 搜食物、调份量<br>核对清单再保存 | 日历热力图<br>与 7 / 30 天曲线 |
 
 ## 功能
 
@@ -70,15 +70,15 @@
 
 ## 技术栈
 
-| 项目      | 说明                                                   |
-| ------- | ---------------------------------------------------- |
-| 运行时     | 微信小程序原生（`App` / `Page` / `Component`）                |
-| 语言      | JavaScript（CommonJS）+ WXML + WXSS                    |
-| 存储      | `wx.storage` 本地存储，无数据库、无自有后端                         |
-| 依赖      | **无 npm 依赖，无构建步骤**                                   |
-| Android | 微信开发者工具「多端应用」打包，签名后分发 APK                            |
-| 测试      | Node 内置测试器 + `wx` mock，`node --test tests/*.test.js` |
-| 主题      | `theme.json` 支持系统深色模式                                |
+| 项目 | 说明 |
+| --- | --- |
+| 运行时 | 微信小程序原生（`App` / `Page` / `Component`） |
+| 语言 | JavaScript（CommonJS）+ WXML + WXSS |
+| 存储 | `wx.storage` 本地存储，无数据库、无自有后端 |
+| 依赖 | **无 npm 依赖，无构建步骤** |
+| Android | 微信开发者工具「多端应用」打包，签名后分发 APK |
+| 测试 | Node 内置测试器 + `wx` mock，`node --test tests/*.test.js` |
+| 主题 | `theme.json` 支持系统深色模式 |
 
 ## 目录结构
 
@@ -129,11 +129,11 @@ APK 通过 [GitHub Releases](https://github.com/wzsheen/Chigedan/releases/latest
 
 营养数值来自三类来源，精度不一样，用之前值得知道：
 
-| 来源             | 规模       | 性质            |
-| -------------- | -------- | ------------- |
-| USDA SR Legacy | 38 项基础食物 | 公开数据库参考值      |
-| 重庆地域菜肴         | 80 余项    | 按常见配方做的**估算** |
-| 饮料             | 常见品类     | 参考值           |
+| 来源 | 规模 | 性质 |
+| --- | --- | --- |
+| USDA SR Legacy | 38 项基础食物 | 公开数据库参考值 |
+| 重庆地域菜肴 | 80 余项 | 按常见配方做的**估算** |
+| 饮料 | 常见品类 | 参考值 |
 
 用户自己确认过的食物会进入个人库（上限 500 条），优先于内置数据。**这些数字用于日常参考，不是实验室检测结果**，不同做法、不同店家差异很大。
 
