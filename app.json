@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/index/index",
+    "pages/add/add",
+    "pages/goal/goal",
+    "pages/weight/weight",
+    "pages/analysis/analysis",
+    "pages/water/water",
+    "pages/history/history",
+    "pages/profile/profile",
+    "pages/health/health",
+    "pages/stats/stats",
+    "pages/data/data",
+    "pages/about/about",
+    "pages/prefs/prefs",
+    "pages/advice/advice",
+    "pages/knowledge/knowledge",
+    "pages/ai/ai",
+    "pages/ai-provider/ai-provider",
+    "pages/privacy/privacy"
+  ],
+  "window": {
+    "navigationBarTitleText": "吃个蛋",
+    "navigationBarBackgroundColor": "@navBackground",
+    "navigationBarTextStyle": "@navText",
+    "backgroundColor": "@pageBackground",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "subPackages": [
+    {
+      "name": "mascot-motion",
+      "root": "mascot-motion",
+      "pages": [
+        "preview/index"
+      ]
+    },
+    {
+      "name": "launch-video",
+      "root": "launch-video",
+      "pages": [
+        "player/index"
+      ]
+    }
+  ],
+  "darkmode": true,
+  "themeLocation": "theme.json"
+}

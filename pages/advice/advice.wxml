@@ -1,0 +1,43 @@
+<template name="recipeCard">
+  <view class="recipe-card">
+    <view class="recipe-header" bindtap="handleToggleRecipe" data-id="{{card.id}}" aria-role="button" aria-label="{{open ? '收起' : '展开'}}{{card.title}}">
+      <view class="recipe-photo"><image class="recipe-atlas" src="{{card.artSrc}}" mode="scaleToFill" style="{{card.artStyle}}" /><text class="photo-caption">搭配示意</text></view>
+      <view class="recipe-copy"><text class="recipe-name">{{card.title}}</text><text class="recipe-subtitle">{{card.subtitle}}</text><view class="recipe-meta"><text class="recipe-energy">约 {{card.energyText}}</text><text class="recipe-tag">{{card.tags[0]}}</text></view></view>
+      <text class="recipe-chevron">{{open ? '▴' : '▾'}}</text>
+    </view>
+    <view class="recipe-detail" wx:if="{{open}}">
+      <text class="detail-title">食物与份量</text>
+      <view class="portion-line" wx:for="{{card.lines}}" wx:for-item="line" wx:key="name"><text>{{line.qtyText}}</text><text>约 {{line.kcalText}}</text></view>
+      <text class="detail-title">整份营养（估算）</text>
+      <view class="nutrition-grid"><view class="nutrition-cell"><text class="nutrition-value">{{card.energyText}}</text><text>热量</text></view><view class="nutrition-cell"><text class="nutrition-value">{{card.protein}} g</text><text>蛋白质</text></view><view class="nutrition-cell"><text class="nutrition-value">{{card.carb}} g</text><text>碳水</text></view><view class="nutrition-cell"><text class="nutrition-value">{{card.fat}} g</text><text>脂肪</text></view></view>
+      <text class="detail-title">各食物营养明细</text>
+      <view class="nutrition-table"><view class="table-row table-heading"><text class="table-food">食物</text><text class="table-energy">热量</text><text class="table-number">蛋白</text><text class="table-number">碳水</text><text class="table-number">脂肪</text></view><view class="table-row" wx:for="{{card.lines}}" wx:for-item="line" wx:key="name"><text class="table-food">{{line.name}}</text><text class="table-energy">{{line.kcalText}}</text><text class="table-number">{{line.protein}}g</text><text class="table-number">{{line.carb}}g</text><text class="table-number">{{line.fat}}g</text></view></view>
+      <view class="food-facts"><text class="detail-title">认识这份搭配</text><view class="fact-line" wx:for="{{card.lines}}" wx:for-item="line" wx:key="name"><text class="fact-name">{{line.name}}</text><text class="fact-text">{{line.fact}}</text></view><text class="fact-source">搭配原则参考：中国居民膳食指南（2022）、WHO Healthy diet</text><view class="source-link" bindtap="handleKnowledge">查看相关科普与来源 ›</view></view>
+      <text class="portion-note">{{card.why}} 食物库按常见单位估算，烹调与品牌会改变数值。</text>
+      <text class="recipe-over" wx:if="{{card.overText}}">{{card.overText}}</text>
+      <view class="recipe-save" bindtap="handleRecord" data-id="{{card.id}}" aria-role="button">加入本餐清单</view>
+      <text class="portion-note">进入清单后可修改份量，点击保存才会写入记录。</text>
+    </view>
+  </view>
+</template>
+<view class="page advice-page {{uiThemeClass}}">
+  <view class="page-tabs"><view class="page-tab {{tab === 'advice' ? 'page-tab-active' : ''}}" data-key="advice" bindtap="handleTab">今日建议</view><view class="page-tab {{tab === 'library' ? 'page-tab-active' : ''}}" data-key="library" bindtap="handleTab">食谱库</view></view>
+  <block wx:if="{{tab === 'advice'}}">
+    <text class="today-date">今天 · {{todayText}}</text>
+    <view class="status-card status-{{diet.kind}}"><text class="status-title">{{diet.title || emptyTitle || '正在读取饮食记录…'}}</text><text class="status-basis" wx:if="{{diet}}">基于目前已记录的饮食</text><text class="status-message">{{diet.message || emptyDesc}}</text></view>
+    <view class="intake-grid"><view><text class="intake-label">已记录</text><text class="intake-value">{{intakeText || '—'}}</text></view><view><text class="intake-label">目标</text><text class="intake-value">{{goalText || '—'}}</text></view><view><text class="intake-label">参考搭配</text><text class="intake-value intake-small">按实际食量调整</text></view></view>
+    <view class="recommend-heading"><text class="section-title">下一餐搭配参考</text><text class="section-sub">结合当前记录推荐，不要求额外加餐</text></view>
+    <view class="meal-tabs"><view wx:for="{{mealTabs}}" wx:key="key" class="meal-tab {{activeMeal === item.key ? 'meal-active' : ''}}" bindtap="handleMealTab" data-key="{{item.key}}">{{item.label}}</view></view>
+    <text class="empty-hint" wx:if="{{state === 'empty'}}">{{emptyDesc}}</text>
+    <template wx:for="{{mealRecipes}}" wx:key="id" is="recipeCard" data="{{card:item,open:expandedId === item.id}}" />
+  </block>
+  <block wx:else>
+    <view class="library-heading"><text class="section-title">好好吃饭，也可以很简单</text><text class="section-sub">每个餐次 12 套参考搭配，从这里找到灵感。</text></view>
+    <view class="meal-tabs"><view wx:for="{{mealTabs}}" wx:key="key" class="meal-tab {{libMeal === item.key ? 'meal-active' : ''}}" bindtap="handleLibMeal" data-key="{{item.key}}">{{item.label}}</view></view>
+    <text class="library-count">{{libLabel}}搭配 · 共 {{libCount}} 套</text>
+    <input class="recipe-search" placeholder="搜索食材或食谱" value="{{query}}" bindinput="handleSearch" />
+    <template wx:for="{{libRecipes}}" wx:key="id" is="recipeCard" data="{{card:item,open:libExpandedId === item.id}}" />
+    <view class="empty-hint" wx:if="{{libRecipes.length === 0}}">没有找到匹配的搭配，试试其他食材名称。</view>
+  </block>
+  <text class="page-footnote">点击食谱即可在下方展开食物、营养与科普。所有搭配均可按实际情况调整。</text>
+</view>

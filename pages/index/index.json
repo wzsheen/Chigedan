@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "",
+  "navigationStyle":"custom",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#fffbef",
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "app-dock": "/components/app-dock/app-dock",
+    "egg-mascot": "/components/egg-mascot/egg-mascot"
+  }
+}

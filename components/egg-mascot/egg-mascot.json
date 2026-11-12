@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "egg-animation": "/mascot-motion/components/egg-animation/egg-animation",
+    "egg-static": "/components/egg-static/egg-static"
+  },
+  "componentPlaceholder": {
+    "egg-animation": "egg-static"
+  }
+}

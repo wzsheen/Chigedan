@@ -1,0 +1,89 @@
+<!-- 8 套预设头像：使用已确认的立体可爱图稿，保留原有 key 和用户选择 -->
+<template name="avatarArt">
+    <view class="avatar-toy"><image class="avatar-toy-image" src="/assets/compat/avatar-{{key}}.png" mode="aspectFit" aria-label="立体可爱头像" /></view>
+</template>
+
+<view class="page profile-page {{uiThemeClass}}">
+  <view class="header"><text class="page-sub">好好吃饭，也要好好照顾自己</text></view>
+  <view class="profile-card"><view class="profile-top"><view class="avatar-wrap" bindtap="handleOpenAvatar" hover-class="avatar-hover"><image wx:if="{{avatarImage !== ''}}" class="avatar-img" src="{{avatarImage}}" mode="aspectFill" binderror="handleAvatarImageError" /><template wx:else is="avatarArt" data="{{key:avatarKey}}" /><view class="avatar-edit">换</view></view><view class="profile-meta">
+    <view wx:if="{{!editingName}}" class="name-row" bindtap="handleEditName"><text class="name-text">{{nickname}}</text><image class="name-pencil" src="/assets/icons/line-pencil.png" mode="aspectFit" /></view><view wx:else class="name-editor"><input class="name-input" value="{{nameDraft}}" maxlength="12" focus="{{editingName}}" placeholder="最多12个字" bindinput="handleNameInput" bindconfirm="handleNameSave" /><text class="name-action" bindtap="handleNameSave">保存</text><text class="name-action name-action-cancel" bindtap="handleNameCancel">取消</text></view><text class="name-error" wx:if="{{nameError}}">{{nameError}}</text>
+    <view class="metric-row"><view class="metric" data-key="height" bindtap="handleMetricTap"><view><text class="metric-value">{{heightText}}</text><text class="metric-unit" wx:if="{{heightText !== '—'}}">cm</text></view><text class="metric-label">身高</text></view><view class="metric" data-key="weight" bindtap="handleMetricTap"><view><text class="metric-value">{{weightText}}</text><text class="metric-unit" wx:if="{{weightText !== '—'}}">{{weightUnit}}</text></view><text class="metric-label">体重</text></view><view class="metric" data-key="days" bindtap="handleMetricTap"><view><text class="metric-value">{{dayCountText}}</text><text class="metric-unit">天</text></view><text class="metric-label">记录</text></view></view>
+  </view></view></view>
+  <view class="profile-group" wx:for="{{menuGroups}}" wx:key="title" wx:for-item="group"><text class="profile-group-title">{{group.title}}</text><view class="profile-grid"><view class="profile-menu {{item.wide ? 'menu-wide' : ''}}" wx:for="{{group.items}}" wx:key="key" data-key="{{item.key}}" bindtap="handleMenu" hover-class="profile-menu-hover" aria-role="button"><view class="profile-menu-icon"><image src="/assets/icons/menu/{{item.icon}}.svg" mode="aspectFit" /></view><text>{{item.label}}</text><text class="menu-chevron">›</text></view></view></view>
+    <view class="avatar-mask" wx:if="{{avatarPickerOpen}}" bindtap="handleCloseAvatar">
+        <view class="avatar-sheet" catchtap="handleSheetTap">
+            <view class="sheet-head">
+                <text class="sheet-title">换个头像</text>
+                <text class="sheet-sub">8 套预设点一下换上，也可以用自己的照片</text>
+            </view>
+            <view class="avatar-source">
+                <view class="avatar-source-btn" hover-class="avatar-source-hover" hover-stay-time="60" bindtap="handlePickImage">
+                    <text class="avatar-source-main">用本地图片</text>
+                    <text class="avatar-source-hint">相册或拍照，只存在这台手机</text>
+                </view>
+                <view class="avatar-source-reset" wx:if="{{avatarImage !== ''}}" bindtap="handleResetImage">
+                    <text>恢复预设</text>
+                </view>
+            </view>
+            <view class="avatar-grid">
+                <view
+                    class="avatar-cell {{avatarImage === '' && avatarKey === item.key ? 'avatar-cell-active' : ''}}"
+                    wx:for="{{avatars}}"
+                    wx:key="key"
+                    data-key="{{item.key}}"
+                    bindtap="handlePickAvatar"
+                >
+                    <template is="avatarArt" data="{{key: item.key}}" />
+                    <text class="avatar-name">{{item.label}}</text>
+                </view>
+            </view>
+            <view class="sheet-close" bindtap="handleCloseAvatar">
+                <text>完成</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- 点三格数据弹出的小悬浮框：身高/体重可改，记录天数只读 -->
+    <view class="pop-mask" wx:if="{{popOpen}}" bindtap="handlePopClose" catchtouchmove="noop"></view>
+    <view class="mini-pop" wx:if="{{popOpen}}" style="top: {{popTop}}px;">
+        <view class="pop-head">
+            <text class="pop-title">{{popTitle}}</text>
+            <text class="pop-sub" wx:if="{{popKey !== 'days'}}">{{popSub}}</text>
+        </view>
+
+        <block wx:if="{{popKey !== 'days'}}">
+            <view class="pop-input-row">
+                <input
+                    class="pop-input"
+                    type="digit"
+                    value="{{popValue}}"
+                    placeholder="{{popPlaceholder}}"
+                    focus="{{popFocus}}"
+                    bindinput="handlePopInput"
+                    bindconfirm="handlePopSave"
+                    confirm-type="done"
+                />
+                <text class="pop-unit">{{popUnit}}</text>
+            </view>
+            <text class="pop-error" wx:if="{{popError}}">{{popError}}</text>
+        </block>
+
+        <text class="pop-desc" wx:else>{{popDesc}}</text>
+
+        <view class="pop-actions">
+            <view class="pop-btn pop-btn-ghost" hover-class="pop-btn-hover" bindtap="handlePopClose">
+                <text>{{popKey === 'days' ? '知道了' : '取消'}}</text>
+            </view>
+            <view wx:if="{{popKey !== 'days'}}" class="pop-action-space" aria-hidden="true"></view>
+            <view class="pop-btn pop-btn-primary" hover-class="pop-btn-primary-hover" wx:if="{{popKey === 'days'}}" bindtap="handleOpenStats">
+                <text>看统计</text>
+            </view>
+            <view class="pop-btn pop-btn-primary" hover-class="pop-btn-primary-hover" wx:else bindtap="handlePopSave">
+                <text>保存</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="local-data-note">所有数据本地储存，请放心使用！</view>
+    <app-dock opacity="{{navOpacity}}" blur="{{navBlur}}" glass="{{navGlass}}" theme="{{uiResolvedTheme}}" active="profile" />
+</view>

@@ -1,0 +1,65 @@
+<view class="page {{uiThemeClass}}">
+    <view class="brand">
+        <image class="about-logo" src="/assets/compat/brand-logo.png" mode="aspectFit" />
+        <text class="brand-version" bindlongpress="handleEnvProbe">版本 {{version}} · {{versionChannel}}</text>
+        <view class="update-row" hover-class="update-row-hover" hover-stay-time="80" bindtap="handleCheckUpdate" aria-role="button" aria-label="检查更新">
+            <text class="update-text {{updateState === 'error' ? 'update-text-warn' : ''}}">{{updateLabel}}</text>
+            <text class="update-arrow" wx:if="{{updateState === 'new'}}">›</text>
+        </view>
+        <text class="update-note {{updateState === 'error' ? 'update-note-warn' : ''}} {{updateState === 'new' ? 'update-note-new' : ''}}" wx:if="{{updateNote}}">{{updateNote}}</text>
+    </view>
+
+    <view class="card">
+        <text class="card-title">关于吃个蛋</text>
+        <text class="intro-slogan">记录每一餐，吃出更好的自己。</text>
+        <text class="card-body">吃个蛋是一款轻巧的饮食记录小程序，支持手动、语音和拍照记餐，帮你记录每日热量与营养摄入，结合身体数据和个人目标，提供饮食搭配参考。还有饮水记录、体重趋势、食谱推荐与健康科普，让照顾自己成为日常。</text>
+        <text class="card-body">饮食记录和身体数据保存在本机。使用自行配置的 AI 服务时，相关照片或录音会发送至所选服务商处理，识别结果由你核对后保存。</text>
+    </view>
+
+    <view class="card">
+        <text class="card-title">数据与隐私</text>
+        <text class="card-body">当前版本没有账号体系和云端同步。你可以导出记录备份，在数据管理中清空相关数据，并在 AI 服务中单独停止或清除接口配置。</text>
+        <view class="privacy-entry" bindtap="handlePrivacy" aria-role="button" aria-label="阅读隐私保护说明"><text>隐私保护说明</text><text class="privacy-entry-arrow">›</text></view>
+    </view>
+
+    <view class="card">
+        <text class="card-title">关于热量数字</text>
+        <text class="card-body">基础食物使用 USDA 公开营养数据；家常菜肴、家庭份量和 AI 识别属于参考估算，与具体品牌、做法和实际重量会有出入。本小程序不提供医疗或营养诊断建议，有特殊饮食需求请咨询专业医师或营养师。</text>
+    </view>
+
+    <view class="card" wx:if="{{email}}">
+        <text class="card-title">反馈</text>
+        <text class="card-body">用着哪里别扭、想要什么功能，直接发邮件告诉我。</text>
+        <view class="email-row" bindtap="handleCopyEmail">
+            <text class="email">{{email}}</text>
+            <text class="email-copy">复制</text>
+        </view>
+        <text class="hint" wx:if="{{copyHint}}">{{copyHint}}</text>
+    </view>
+
+    <text class="footnote">用本地优先的方式，记录好每一天</text>
+
+    <!-- 新版本说明：居中弹窗。点「现在更新」在 App 内下载 APK 并拉起系统安装器，
+         装不了才依次退到系统浏览器、复制链接 -->
+    <view class="update-mask" wx:if="{{updateSheetOpen}}" catchtap="handleCloseUpdate"></view>
+    <view class="update-dialog" wx:if="{{updateSheetOpen}}">
+        <text class="sheet-title">发现新版本 v{{updateInfo.version}}</text>
+        <text class="sheet-sub">当前 v{{version}}{{updateInfo.sizeText ? ' · 安装包 ' + updateInfo.sizeText : ''}}{{updateInfo.dateText ? ' · ' + updateInfo.dateText : ''}}</text>
+        <scroll-view class="sheet-notes" scroll-y>
+            <text class="sheet-notes-text">{{updateInfo.notes}}</text>
+        </scroll-view>
+        <view class="sheet-progress" wx:if="{{installStage !== 'idle'}}">
+            <view class="sheet-progress-track">
+                <view class="sheet-progress-fill" style="width:{{installPercent}}%"></view>
+            </view>
+            <text class="sheet-progress-text">{{installStage === 'installing' ? '正在打开安装程序…' : '正在下载 ' + installPercent + '%' + (installBytesText ? ' · ' + installBytesText : '')}}</text>
+        </view>
+        <text class="sheet-hint" wx:if="{{sheetCopyHint}}">{{sheetCopyHint}}</text>
+        <text class="sheet-tip">点「现在更新」会直接下载安装包；装完后按系统提示覆盖安装，若提示签名不一致，需要先卸载旧版再装。</text>
+        <view class="sheet-actions">
+            <view class="sheet-btn sheet-btn-ghost" hover-class="sheet-btn-hover" hover-stay-time="80" catchtap="handleCloseUpdate"><text>{{installStage === 'idle' ? '稍后' : '取消'}}</text></view>
+            <view class="sheet-btn sheet-btn-solid {{installStage === 'idle' ? '' : 'sheet-btn-busy'}}" hover-class="sheet-btn-hover" hover-stay-time="80" catchtap="handleStartUpdate"><text>{{installStage === 'downloading' ? installPercent + '%' : (installStage === 'installing' ? '安装中…' : '现在更新')}}</text></view>
+        </view>
+        <text class="sheet-fallback" catchtap="handleCopyUpdateLink">{{updateInfo.downloadUrl ? '下载不了？复制下载链接' : '复制发布页链接'}}</text>
+    </view>
+</view>

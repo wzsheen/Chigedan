@@ -1,0 +1,1 @@
+<view class="preview-page"><view class="preview-row" wx:for="{{states}}" wx:key="key"><egg-mascot state="{{item.key}}" /><text>{{item.label}}</text></view></view>

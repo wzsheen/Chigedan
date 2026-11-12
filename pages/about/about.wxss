@@ -1,0 +1,376 @@
+.page {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 48rpx 32rpx 80rpx;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 36rpx;
+}
+
+.brand-mark {
+    width: 108rpx;
+    height: 108rpx;
+    border-radius: 32rpx;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2rpx solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 12rpx 32rpx rgba(100, 68, 22, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-ring {
+    width: 56rpx;
+    height: 56rpx;
+    box-sizing: border-box;
+    border: 10rpx solid #a76b11;
+    border-right-color: rgba(230, 174, 26, 0.24);
+    border-radius: 50%;
+    transform: rotate(-45deg);
+}
+
+.brand-name {
+    margin-top: 18rpx;
+    color: #432b1d;
+    font-size: 34rpx;
+    font-weight: 600;
+}
+
+.brand-version {
+    margin-top: 6rpx;
+    color: #a29180;
+    font-size: 22rpx;
+}
+
+.card {
+    margin-bottom: 24rpx;
+    padding: 30rpx;
+    border-radius: 28rpx;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(14rpx);
+    -webkit-backdrop-filter: blur(14rpx);
+    border: 2rpx solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 16rpx 48rpx rgba(100, 68, 22, 0.06);
+}
+
+.card-title {
+    display: block;
+    margin-bottom: 14rpx;
+    color: #432b1d;
+    font-size: 28rpx;
+    font-weight: 600;
+}
+
+.card-body {
+    display: block;
+    margin-bottom: 12rpx;
+    color: #86725e;
+    font-size: 24rpx;
+    line-height: 1.75;
+}
+
+.card-body:last-child {
+    margin-bottom: 0;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    padding: 16rpx 0;
+    border-bottom: 2rpx solid rgba(100, 68, 22, 0.05);
+}
+
+.feature-last {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.feature-name {
+    color: #432b1d;
+    font-size: 26rpx;
+}
+
+.feature-desc {
+    margin-top: 6rpx;
+    color: #a29180;
+    font-size: 22rpx;
+    line-height: 1.6;
+}
+
+.email-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16rpx;
+    padding: 20rpx 24rpx;
+    border-radius: 16rpx;
+    background: rgba(100, 68, 22, 0.04);
+}
+
+.email {
+    color: #432b1d;
+    font-size: 26rpx;
+}
+
+.email-copy {
+    color: #a76b11;
+    font-size: 24rpx;
+}
+
+.hint {
+    display: block;
+    margin-top: 12rpx;
+    color: #a29180;
+    font-size: 22rpx;
+}
+
+.footnote {
+    display: block;
+    margin-top: 28rpx;
+    color: #a0a5ad;
+    font-size: 22rpx;
+    text-align: center;
+}
+
+@import "../../styles/cream.wxss";
+
+.intro-slogan{display:block;margin-top:18rpx;color:#8a6632;font-size:27rpx;line-height:1.8}
+.privacy-entry{display:flex;align-items:center;justify-content:space-between;margin-top:24rpx;padding:22rpx 24rpx;background:rgba(255,237,176,.45);border:1rpx solid #f1e3b5;border-radius:20rpx;font-size:26rpx;color:#836028}
+.privacy-entry-arrow{font-size:36rpx;color:#b49b6d}
+
+/* 版本号下面的「检查更新」：轻量文字入口，不做成按钮，避免抢品牌区的视线 */
+.update-row {
+    display: flex;
+    align-items: center;
+    margin-top: 12rpx;
+    padding: 8rpx 22rpx;
+    border-radius: 999rpx;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1rpx solid rgba(100, 68, 22, 0.10);
+}
+
+.update-row-hover {
+    background: rgba(255, 237, 176, 0.55);
+}
+
+.update-text {
+    color: #8a6632;
+    font-size: 22rpx;
+    letter-spacing: 0.5rpx;
+}
+
+.update-text-warn {
+    color: #b4552a;
+}
+
+.update-arrow {
+    margin-left: 8rpx;
+    color: #a76b11;
+    font-size: 30rpx;
+    line-height: 1;
+}
+
+.update-note {
+    display: block;
+    max-width: 560rpx;
+    margin-top: 10rpx;
+    color: #a29180;
+    font-size: 21rpx;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.update-note-new {
+    color: #a76b11;
+}
+
+.update-note-warn {
+    color: #b4552a;
+}
+
+/* 新版本说明：居中弹窗。比原来的底部面板窄一些，视线不用在屏幕上下两端来回移动 */
+.update-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 60;
+    background: rgba(24, 18, 12, 0.42);
+}
+
+.update-dialog {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 61;
+    box-sizing: border-box;
+    width: 580rpx;
+    max-width: 84vw;
+    padding: 34rpx 30rpx 26rpx;
+    border-radius: 28rpx;
+    background: #fffdf7;
+    box-shadow: 0 24rpx 64rpx rgba(60, 40, 12, 0.26);
+    transform: translate(-50%, -50%);
+    animation: update-dialog-in 180ms ease-out;
+}
+
+@keyframes update-dialog-in {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.sheet-title {
+    display: block;
+    color: #432b1d;
+    font-size: 32rpx;
+    font-weight: 600;
+}
+
+.sheet-sub {
+    display: block;
+    margin-top: 10rpx;
+    color: #a29180;
+    font-size: 22rpx;
+}
+
+.sheet-notes {
+    box-sizing: border-box;
+    max-height: 32vh;
+    margin-top: 20rpx;
+    padding: 20rpx 22rpx;
+    border-radius: 18rpx;
+    background: rgba(100, 68, 22, 0.04);
+}
+
+.sheet-notes-text {
+    color: #6f5c49;
+    font-size: 24rpx;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.sheet-hint {
+    display: block;
+    margin-top: 16rpx;
+    color: #a76b11;
+    font-size: 22rpx;
+}
+
+.sheet-tip {
+    display: block;
+    margin-top: 18rpx;
+    color: #a29180;
+    font-size: 21rpx;
+    line-height: 1.7;
+}
+
+.sheet-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 26rpx;
+}
+
+.sheet-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 84rpx;
+    border-radius: 18rpx;
+    font-size: 26rpx;
+}
+
+.sheet-btn-ghost {
+    flex: 1;
+    margin-right: 20rpx;
+    background: rgba(100, 68, 22, 0.06);
+    color: #7a6650;
+}
+
+.sheet-btn-solid {
+    flex: 1.6;
+    background: #a76b11;
+    color: #fff8e6;
+}
+
+.sheet-btn-hover {
+    opacity: 0.82;
+}
+
+/* 下载/安装进行中：按钮还是那个按钮，但不再响应点击，视觉上要能看出来 */
+.sheet-btn-busy {
+    background: rgba(167, 107, 17, 0.55);
+    color: rgba(255, 248, 230, 0.9);
+}
+
+/* 应用内下载进度：说明区下面是唯一能放下进度的地方，别再加新卡片 */
+.sheet-progress {
+    margin-top: 18rpx;
+}
+
+.sheet-progress-track {
+    height: 10rpx;
+    border-radius: 6rpx;
+    overflow: hidden;
+    background: rgba(100, 68, 22, 0.1);
+}
+
+.sheet-progress-fill {
+    height: 100%;
+    border-radius: 6rpx;
+    background: #a76b11;
+    transition: width 0.2s linear;
+}
+
+.sheet-progress-text {
+    display: block;
+    margin-top: 10rpx;
+    color: #a29180;
+    font-size: 21rpx;
+    text-align: center;
+}
+
+/* 打不开浏览器时的兜底入口，做成小字链接，不跟主按钮抢注意力 */
+.sheet-fallback {
+    display: block;
+    margin-top: 20rpx;
+    color: #a29180;
+    font-size: 21rpx;
+    text-align: center;
+    text-decoration: underline;
+}
+
+@import "../../styles/surfaces.wxss";
+
+/* 深色主题：面板和入口改成深底，文字用浅色 */
+.ui-theme-dark .update-row{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10)}
+.ui-theme-dark .update-arrow{color:#d6b45e}
+/* 这两处原来在深色底上偏暗，顺手补上 */
+.ui-theme-dark .intro-slogan{color:#d6b45e}
+.ui-theme-dark .privacy-entry{background:#343122;border-color:#544a33;color:#ebdcae}
+.ui-theme-dark .privacy-entry-arrow{color:#b9a273}
+.ui-theme-dark .update-text{color:#d6b45e}
+.ui-theme-dark .update-text-warn{color:#e59a72}
+.ui-theme-dark .update-note{color:#aeb9ca}
+.ui-theme-dark .update-note-new{color:#d6b45e}
+.ui-theme-dark .update-note-warn{color:#e59a72}
+.ui-theme-dark .update-mask{background:rgba(0,0,0,.56)}
+.ui-theme-dark .update-dialog{background:#1c222d;box-shadow:0 24rpx 64rpx rgba(0,0,0,.5)}
+.ui-theme-dark .sheet-title{color:#e5e5df}
+.ui-theme-dark .sheet-sub{color:#aeb9ca}
+.ui-theme-dark .sheet-notes{background:rgba(255,255,255,.05)}
+.ui-theme-dark .sheet-notes-text{color:#c9ccd6}
+.ui-theme-dark .sheet-hint{color:#d6b45e}
+.ui-theme-dark .sheet-tip{color:#aeb9ca}
+.ui-theme-dark .sheet-fallback{color:#8b96a8}
+.ui-theme-dark .sheet-btn-ghost{background:rgba(255,255,255,.08);color:#dfe3ea}
+.ui-theme-dark .sheet-btn-solid{background:#d6b45e;color:#292415}
+.ui-theme-dark .sheet-btn-busy{background:rgba(214,180,94,.5);color:rgba(41,36,21,.85)}
+.ui-theme-dark .sheet-progress-track{background:rgba(255,255,255,.1)}
+.ui-theme-dark .sheet-progress-fill{background:#d6b45e}
+.ui-theme-dark .sheet-progress-text{color:#aeb9ca}

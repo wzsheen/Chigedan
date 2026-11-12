@@ -1,0 +1,240 @@
+.page {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 32rpx 32rpx 80rpx;
+}
+
+.header {
+    margin-bottom: 24rpx;
+}
+
+.page-title {
+    display: block;
+    color: #432b1d;
+    font-size: 40rpx;
+    font-weight: 600;
+}
+
+.page-sub {
+    display: block;
+    margin-top: 6rpx;
+    color: #a29180;
+    font-size: 24rpx;
+}
+
+.card {
+    margin-bottom: 24rpx;
+    padding: 30rpx;
+    border-radius: 28rpx;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(14rpx);
+    -webkit-backdrop-filter: blur(14rpx);
+    border: 2rpx solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 16rpx 48rpx rgba(100, 68, 22, 0.06);
+}
+
+.stat-row {
+    display: flex;
+}
+
+.stat-cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-value {
+    color: #432b1d;
+    font-size: 36rpx;
+    font-weight: 600;
+    /* 固定行高，保证「6 KB」这类小号数字与 7/1/2 占同样的高度，下方标签才能齐平 */
+    line-height: 44rpx;
+}
+
+.stat-value-small {
+    font-size: 28rpx;
+    line-height: 44rpx;
+}
+
+.stat-label {
+    margin-top: 6rpx;
+    color: #a29180;
+    font-size: 22rpx;
+}
+
+.card-title {
+    display: block;
+    color: #432b1d;
+    font-size: 28rpx;
+    font-weight: 600;
+}
+
+.card-desc {
+    display: block;
+    margin-top: 10rpx;
+    color: #86725e;
+    font-size: 24rpx;
+    line-height: 1.7;
+}
+
+.btn {
+    margin-top: 26rpx;
+    height: 88rpx;
+    border-radius: 999rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28rpx;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ffd555, #a76b11);
+    color: #ffffff;
+    box-shadow: 0 10rpx 26rpx rgba(230, 174, 26, 0.28);
+}
+
+.btn-disabled {
+    opacity: 0.6;
+}
+
+.btn-danger {
+    background: rgba(229, 72, 77, 0.08);
+    color: #c0353a;
+    border: 2rpx solid rgba(229, 72, 77, 0.24);
+}
+
+.btn-danger-confirm {
+    background: #e5484d;
+    color: #ffffff;
+    box-shadow: 0 10rpx 26rpx rgba(229, 72, 77, 0.3);
+}
+
+.card-danger .card-title {
+    color: #c0353a;
+}
+
+.hint {
+    display: block;
+    margin-top: 14rpx;
+    color: #86725e;
+    font-size: 22rpx;
+    line-height: 1.6;
+}
+
+.hint-danger {
+    color: #c0353a;
+}
+
+.fallback {
+    width: 100%;
+    height: 320rpx;
+    margin-top: 16rpx;
+    padding: 18rpx;
+    box-sizing: border-box;
+    border-radius: 16rpx;
+    background: rgba(100, 68, 22, 0.04);
+    color: #86725e;
+    font-size: 22rpx;
+    line-height: 1.6;
+}
+
+/* 导入 */
+.mode-row {
+    display: flex;
+    margin-top: 20rpx;
+}
+
+.mode-chip {
+    padding: 14rpx 30rpx;
+    margin-right: 16rpx;
+    border-radius: 999rpx;
+    background: rgba(100, 68, 22, 0.05);
+    color: #86725e;
+    font-size: 24rpx;
+}
+
+.mode-active {
+    background: rgba(230, 174, 26, 0.12);
+    color: #a76b11;
+    font-weight: 600;
+}
+
+.mode-hint {
+    display: block;
+    margin-top: 12rpx;
+    color: #a29180;
+    font-size: 22rpx;
+}
+
+.paste {
+    width: 100%;
+    height: 260rpx;
+    margin-top: 18rpx;
+    padding: 18rpx;
+    box-sizing: border-box;
+    border-radius: 16rpx;
+    background: rgba(100, 68, 22, 0.04);
+    color: #432b1d;
+    font-size: 22rpx;
+    line-height: 1.6;
+}
+
+.btn-row {
+    display: flex;
+    margin-top: 20rpx;
+}
+
+.btn-row .btn {
+    flex: 1;
+    margin-top: 0;
+    font-size: 26rpx;
+}
+
+.btn-row .btn + .btn {
+    margin-left: 16rpx;
+}
+
+.btn-ghost {
+    background: rgba(255, 255, 255, 0.85);
+    border: 2rpx solid rgba(100, 68, 22, 0.12);
+    color: #86725e;
+}
+
+.preview {
+    margin-top: 22rpx;
+    padding: 22rpx;
+    border-radius: 16rpx;
+    background: rgba(230, 174, 26, 0.06);
+    border: 2rpx solid rgba(230, 174, 26, 0.16);
+}
+
+.preview-title {
+    display: block;
+    margin-bottom: 12rpx;
+    color: #c04a1c;
+    font-size: 24rpx;
+    font-weight: 600;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6rpx 0;
+    color: #86725e;
+    font-size: 24rpx;
+}
+
+.preview-warn {
+    display: block;
+    margin-top: 10rpx;
+    color: #c0353a;
+    font-size: 22rpx;
+}
+
+@import "../../styles/cream.wxss";
+
+.page .btn-row .btn{min-width:0;box-sizing:border-box;margin-left:0;margin-right:0}
+.page .btn-row .btn + .btn{margin-left:20rpx}
+
+@import "../../styles/surfaces.wxss";

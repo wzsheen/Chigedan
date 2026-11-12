@@ -1,0 +1,53 @@
+<view class="page ai-page {{uiThemeClass}}" bindtap="handleCloseModels">
+  <view class="header"><text class="page-title">AI 服务</text><text class="page-sub">内置服务一键开启；也可以按服务分别配置自己的 API。</text></view>
+  <view class="card config-card service-card builtin-service-card {{!builtinAll ? 'service-card-stop' : ''}}">
+    <view class="service-status-row"><text class="notice-title">内置 AI 服务<text wx:if="{{builtinAll}}" class="service-active"> · 已全部启动</text><text wx:elif="{{builtinPartial}}" class="service-active"> · 部分已启动</text></text><button class="service-toggle {{!builtinAll ? 'service-toggle-stop' : ''}}" bindtap="handleBuiltin" disabled="{{busy || modelsLoading}}">{{builtinAll ? '停止' : '启动'}}</button></view>
+    <text class="field-help">{{quotaText || '每项内置服务每天有免费次数，启动后这里会显示今日剩余。如需更多次数，请在下方配置自己的 AI 服务。'}}</text>
+  </view>
+  <view class="ai-tabs"><view class="ai-tab {{kind === 'vision' ? 'ai-tab-active' : ''}}" data-kind="vision" bindtap="handleTab">视觉识别</view><view class="ai-tab {{kind === 'speech' ? 'ai-tab-active' : ''}}" data-kind="speech" bindtap="handleTab">语音识别</view><view class="ai-tab {{kind === 'nutrition' ? 'ai-tab-active' : ''}}" data-kind="nutrition" bindtap="handleTab">营养估算</view></view>
+  <view class="ai-notice {{enabled ? 'ai-notice-ready service-card' : configured ? 'service-card service-card-stop' : ''}}">
+    <view class="service-status-row"><text class="notice-title">{{configured ? 'API 已配置' : '请配置 API'}}<text wx:if="{{enabled}}" class="service-active"> · 已启动</text></text><button class="service-toggle {{configured && !enabled ? 'service-toggle-stop' : ''}}" bindtap="handleToggleService" disabled="{{!configured || busy || modelsLoading}}">{{enabled && !dirty ? '停止' : dirty ? '保存并启动' : '启动'}}</button></view>
+    <text class="notice-body">{{kind === 'vision' ? '拍照识别食物，核对后保存。' : kind === 'speech' ? '语音识别食物，核对后保存。' : '补全库外食物营养，核对后保存。'}}</text>
+  </view>
+  <view class="card config-card">
+    <view class="config-heading"><text class="config-description">{{kind === 'vision' ? '拍照识别食物，估算份量。' : kind === 'speech' ? '把录音转成食物清单。' : '估算食物的热量和营养。'}}</text></view>
+    <text class="field-label">服务商</text>
+    <view class="provider-field" catchtap="handleModelFieldTap">
+      <view class="provider-picker {{providerOpen ? 'model-input-open' : ''}}" bindtap="toggleProviders" aria-role="button" aria-label="选择服务商"><image class="brand-icon" src="{{providerIcon}}" mode="aspectFit" /><text class="provider-current-name">{{providerName}}</text><text class="provider-arrow">{{providerOpen ? '▴' : '▾'}}</text></view>
+      <view class="model-dropdown provider-dropdown" wx:if="{{providerOpen}}"><scroll-view class="provider-options" scroll-y><view wx:for="{{providerItems}}" wx:key="id" class="model-option provider-option {{draft.provider === item.id ? 'model-option-selected' : ''}}" data-index="{{index}}" bindtap="chooseProvider"><image class="brand-icon" src="{{item.icon}}" mode="aspectFit" /><text class="provider-option-name">{{item.name}}</text><text wx:if="{{draft.provider === item.id}}" class="option-check">✓</text></view></scroll-view></view>
+    </view>
+    <view class="provider-info"><text class="provider-note">{{providerNote}}</text><view wx:if="{{hasKeyLink}}" class="provider-key-link" bindtap="handleGetApiKey" aria-role="button">获取 API Key ↗</view></view>
+    <text wx:if="{{hasKeyLink}}" class="field-help">官方页面若无法在微信内打开，可选择复制地址后前往浏览器。</text>
+    <text class="field-help">切换服务商会清空当前模型和密钥；各项服务配置分别保存。</text>
+    <text class="field-label">服务地址</text>
+    <input class="config-input" value="{{draft.baseUrl}}" data-field="baseUrl" bindinput="handleInput" placeholder="https://api.example.com/v1" maxlength="500" type="text" adjust-position />
+    <text class="field-help">填写 HTTPS 基础地址，不包含具体识别路径。</text>
+    <view class="key-heading"><text class="field-label">API Key <text class="optional">可选</text></text><view class="key-visibility" bindtap="handleKeyVisibility" aria-role="button">{{showKey ? '隐藏' : '显示'}}</view></view>
+    <input class="config-input key-input" value="{{draft.apiKey}}" password="{{!showKey}}" data-field="apiKey" bindinput="handleInput" placeholder="需要鉴权时填写" maxlength="4096" type="text" adjust-position />
+    <text class="field-help">仅保存在本机，不随饮食数据备份导出。本机存储并非加密保险箱。</text>
+    <view class="model-heading"><text class="field-label">模型名称</text><button class="fetch-models" bindtap="handleFetchModels" loading="{{modelsLoading}}" disabled="{{modelsLoading || busy}}">{{modelsLoading ? '获取中' : '获取模型'}}</button></view>
+    <view class="model-field" catchtap="handleModelFieldTap">
+      <view class="model-input-row {{modelsOpen ? 'model-input-open' : ''}}">
+        <image class="brand-icon selected-model-brand" src="{{selectedModel.icon}}" mode="aspectFit" /><input class="config-input model-input" value="{{draft.model}}" data-field="model" bindinput="handleInput" bindfocus="handleModelFocus" placeholder="输入或选择模型 ID" maxlength="200" type="text" adjust-position />
+        <view wx:if="{{models.length}}" class="model-dropdown-arrow" bindtap="handleToggleModels" aria-role="button" aria-label="展开或收起模型列表">{{modelsOpen ? '▴' : '▾'}}</view>
+      </view>
+      <view class="model-dropdown" wx:if="{{modelsOpen && models.length}}">
+        <text class="model-dropdown-count">{{visibleModels.length}} 个模型 · 输入名称筛选</text>
+        <scroll-view class="model-options" scroll-y>
+          <view wx:for="{{modelRows}}" wx:key="id" class="model-option {{draft.model === item.id ? 'model-option-selected' : ''}}" data-model="{{item.id}}" bindtap="handleChooseModel"><image class="brand-icon" src="{{item.icon}}" mode="aspectFit" /><view class="model-option-copy"><text>{{item.id}}</text><view class="capability-icons" wx:if="{{item.capabilities.length}}"><view wx:for="{{item.capabilities}}" wx:for-item="cap" wx:key="key" class="capability-tag" data-key="{{cap.key}}" catchtap="handleCapability" aria-role="button" aria-label="{{cap.label}}"><image class="capability-icon" src="{{cap.icon}}" mode="aspectFit" /><text>{{cap.shortLabel}}</text></view></view></view><text wx:if="{{draft.model === item.id}}" class="option-check">✓</text></view>
+          <text class="model-empty" wx:if="{{!visibleModels.length}}">没有匹配的模型，可手动填写。</text>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="selected-capabilities" wx:if="{{selectedModel.capabilities.length}}"><view wx:for="{{selectedModel.capabilities}}" wx:key="key" class="capability-tag" data-key="{{item.key}}" bindtap="handleCapability"><image class="capability-icon" src="{{item.icon}}" mode="aspectFit" /><text>{{item.shortLabel}}</text></view></view>
+    <text class="field-help capability-help">能力图标依据接口信息或已核对的模型资料，点图标可查看含义；没有信息的模型不标注。</text>
+    <text class="field-help">{{kind === 'vision' ? '选择支持图片输入的模型。' : kind === 'speech' ? '选择支持语音转文字的模型。' : '选择支持文字对话的模型，如文字推理或通用对话模型。'}}</text>
+    <text class="field-help">列表可能不完整，未列出的模型也可以手动填写、保存和测试。</text>
+    <text class="config-error" wx:if="{{error}}" aria-live="polite">{{error}}</text>
+    <view class="connection-result result-{{resultTone}}" wx:if="{{result}}" aria-live="polite">{{result}}</view>
+    <view class="config-actions"><view class="config-action-slot"><button class="test-button" bindtap="handleTest" loading="{{busy}}" disabled="{{busy || modelsLoading}}">{{busy ? '检查中' : '测试连接'}}</button></view><view class="config-action-space" aria-hidden="true"></view><view class="config-action-slot"><button class="save-button" bindtap="handleSave" disabled="{{busy || modelsLoading}}">保存配置</button></view></view>
+    <view class="clear-config {{confirmClear ? 'clear-confirm' : ''}}" bindtap="handleClear" aria-role="button">{{confirmClear ? '再点一次，清除本项配置' : '清除本项配置'}}</view>
+  </view>
+  <view class="test-note"><text class="test-note-title">关于连接测试</text><text class="test-note-body">{{kind !== 'speech' ? '测试连接会向所填模型发送一句“请只回复 OK。”，不依赖模型列表。会产生一次真实模型调用，是否计费以服务商规则为准；不会上传照片或饮食记录，也不会自动保存配置。' : '语音服务目前仅检查模型列表，尚未验证实际语音转写；列表未包含模型不代表它不可用，可手动填写并保存。'}}</text><text class="test-note-body">获取模型只读取列表。模型调用测试成功仅证明文字请求可用，图片识别和语音转写需另行验证。</text><text class="test-note-body">正式小程序只能请求已配置的合法域名。填写新地址不会自动完成域名配置。</text></view>
+</view>
+

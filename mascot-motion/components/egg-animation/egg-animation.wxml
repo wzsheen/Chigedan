@@ -1,0 +1,6 @@
+<view class="mascot" aria-role="img" aria-label="蛋仔：{{label}}">
+  <image class="mascot-fallback" style="{{artworkStyle}}" wx:if="{{!ready}}" src="/assets/mascot/{{pose === 'rest' || pose === 'goal' || atlas === '/mascot-motion/assets/festival-atlas.png' ? 'idle' : pose}}-0.png" mode="aspectFit" aria-hidden="true" />
+  <view class="mascot-viewport {{ready ? '' : 'mascot-loading'}}" style="{{artworkStyle}}" aria-hidden="true">
+    <image wx:if="{{artworkAvailable}}" class="mascot-atlas" src="{{atlas}}" style="left:{{-column * 144}}rpx;top:{{-(row >= 8 ? row - 8 : row) * 156}}rpx;" mode="scaleToFill" bindload="handleAtlasLoad" binderror="handleAtlasError" />
+  </view>
+</view>

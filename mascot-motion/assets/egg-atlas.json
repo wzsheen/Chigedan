@@ -1,0 +1,50 @@
+{
+  "width": 1536,
+  "height": 1664,
+  "cellWidth": 192,
+  "cellHeight": 208,
+  "columns": 8,
+  "rows": [
+    {
+      "state": "idle",
+      "row": 0,
+      "count": 6
+    },
+    {
+      "state": "waving",
+      "row": 1,
+      "count": 4
+    },
+    {
+      "state": "success",
+      "row": 2,
+      "count": 5
+    },
+    {
+      "state": "balanced",
+      "row": 3,
+      "count": 6
+    },
+    {
+      "state": "adjust",
+      "row": 4,
+      "count": 6
+    },
+    {
+      "state": "water",
+      "row": 5,
+      "count": 6
+    },
+    {
+      "state": "sleep",
+      "row": 6,
+      "count": 6
+    },
+    {
+      "state": "goal",
+      "row": 7,
+      "count": 6
+    }
+  ],
+  "source": "ImageGen, grounded in user-approved egg mascot; pet-tool extraction, composition and edge cleanup."
+}

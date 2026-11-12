@@ -1,0 +1,6 @@
+<view class="launch-video-page">
+ <video wx:if="{{videoSrc}}" id="birthdayVideo" class="launch-video" src="{{videoSrc}}" autoplay controls="{{false}}" show-center-play-btn="{{false}}" show-play-btn="{{false}}" show-fullscreen-btn="{{false}}" enable-progress-gesture="{{false}}" object-fit="cover" loop="{{false}}" muted="{{false}}" bindtimeupdate="handleTimeUpdate" bindplay="handlePlay" bindended="handleEnded" binderror="handleError">
+  <cover-view class="launch-skip" bindtap="enterHome">{{navigationError ? '进入首页' : '跳过'}}</cover-view>
+  <cover-view wx:if="{{showPlay && !navigationError}}" class="launch-play" bindtap="startPlayback">点此播放</cover-view>
+ </video>
+</view>

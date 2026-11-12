@@ -1,0 +1,2 @@
+<egg-animation wx:if="{{animated}}" state="{{state}}" event-token="{{eventToken}}" />
+<egg-static wx:else state="idle" />

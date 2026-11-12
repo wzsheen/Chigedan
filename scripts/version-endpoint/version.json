@@ -1,0 +1,10 @@
+{
+    "_说明": "上传到静态托管后的地址填进 utils/app-update.js 的 DEFAULT_ENDPOINT。发版时用 node scripts/publish-version.js 重新生成本文件再覆盖上传，不要手改。",
+    "version": "0.0.1",
+    "publishedAt": "2026-11-03T00:00:00Z",
+    "notes": "首个版本",
+    "releaseUrl": "",
+    "downloadUrl": "",
+    "assetName": "",
+    "assetSize": 0
+}

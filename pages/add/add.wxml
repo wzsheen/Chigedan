@@ -1,0 +1,297 @@
+<view class="page add-page {{uiThemeClass}}" bindtap="handleCatalogDismiss">
+    <view class="entry-heading portion-heading">
+        <text class="catalog-slogan">慢慢吃，好好记</text>
+        <view class="entry-date" data-anchor="header" bindtap="handleDateToggle" aria-role="button" aria-label="选择记录日期"><view class="date-calendar-icon"><view></view></view><text>{{dateLabel}}</text><text class="entry-date-caret">▾</text></view>
+    </view>
+    <view class="entry-meals" aria-label="选择餐次"><view class="entry-meal {{selectedMeal === item.key ? 'entry-meal-selected' : ''}}" wx:for="{{mealOptions}}" wx:key="key" data-key="{{item.key}}" bindtap="handleMealSelect"><text>{{item.label}}</text></view></view>
+
+    <view class="voice-chip {{voiceRecognizing ? 'voice-chip-working' : ''}}" wx:if="{{voiceNote.path !== ''}}" aria-live="polite">
+        <view class="voice-chip-play voice-chip-busy" wx:if="{{voiceRecognizing}}"><view class="ai-orbit"><view></view></view></view>
+        <view class="voice-chip-play" wx:else catchtap="handleVoicePlay" aria-role="button" aria-label="播放或停止语音">{{voicePlaying ? 'Ⅱ' : '▶'}}</view>
+        <view class="voice-chip-main" bindtap="handleTranscriptToggle">
+            <view class="voice-working-line" wx:if="{{voiceRecognizing}}"><text>AI 正在整理…</text><view class="voice-mini-wave" aria-hidden="true"><view></view><view></view><view></view><view></view><view></view><view></view><view></view></view></view>
+            <text class="voice-chip-title" wx:else>{{voiceStage === 'error' ? '未能识别，录音已保留' : voiceStage === 'canceled' ? '已取消等待，录音已保留' : voiceTranscript || '语音原文'}}</text>
+            <text class="voice-chip-sub">{{voiceNote.duration}} 秒 · {{voiceRecognizing ? '正在识别食物与份量' : voiceStage === 'error' || voiceStage === 'canceled' ? '可重试或手动添加食物' : voiceTranscript ? '点击展开原文，核对后保存' : '录音随本餐保存'}}</text>
+        </view>
+        <text class="voice-chip-remove" wx:if="{{voiceRecognizing}}" catchtap="handleCancelVoiceRecognition">取消等待</text>
+        <view class="voice-chip-recovery" wx:elif="{{voiceStage === 'error' || voiceStage === 'canceled'}}"><text catchtap="handleVoiceRetry">重试</text><view class="trash-action" catchtap="handleVoiceRemove" aria-role="button" aria-label="移除语音"><image src="/assets/icons/line-trash.png" mode="aspectFit" aria-hidden="true" /></view></view>
+        <view class="voice-chip-remove trash-action" wx:else catchtap="handleVoiceRemove" aria-role="button" aria-label="移除语音"><image src="/assets/icons/line-trash.png" mode="aspectFit" aria-hidden="true" /></view>
+    </view>
+    <view class="transcript-detail" wx:if="{{voiceTranscriptOpen && voiceTranscript}}">{{voiceTranscript}}</view>
+    <view class="ai-inline-status ai-status-working" wx:if="{{recognizing || nutritionEstimating}}" aria-live="polite"><view class="ai-orbit"><view></view></view><text class="ai-status-text">{{recognizing ? 'AI 正在识别照片中的食物…' : 'AI 正在估算食物营养…'}}</text></view>
+    <view class="voice-status entry-error" wx:if="{{!manualOpen && formError}}">{{formError}}</view>
+    <view class="voice-status" wx:if="{{voiceHint && voiceStage === 'idle'}}">{{voiceHint}}</view>
+    <view class="voice-status pending-food" wx:for="{{pendingFoods}}" wx:key="index"><view class="pending-food-title">{{item.name}}{{item.qty ? ' · ' + (item.approximate ? '约 ' : '') + item.qty + item.unit : ''}}</view><view class="pending-food-reason">{{item.requiresDetail || item.knownFood ? item.reason : '未识别到该食物，请手动添加'}}</view><view class="pending-food-actions"><text data-index="{{index}}" bindtap="handlePendingFill">{{item.needsCapacity ? '补充容量' : item.needsWeight ? '补充重量' : '手动添加'}}</text><text data-index="{{index}}" bindtap="handlePendingEstimate">AI估算</text><view class="trash-action" data-index="{{index}}" bindtap="handlePendingRemove" aria-role="button" aria-label="移除待补全食物"><image src="/assets/icons/line-trash.png" mode="aspectFit" aria-hidden="true" /></view></view></view>
+
+    <view class="portion-picker" wx:if="{{!manualOpen && !recognizing}}">
+        <view class="portion-search-row">
+            <view class="portion-search">
+                <view class="search-magnifier" aria-hidden="true"></view>
+                <input value="{{foodQuery}}" bindinput="handlePortionSearch" placeholder="搜索食物，如米饭" maxlength="30" aria-label="搜索食物" />
+                <view wx:if="{{foodQuery}}" bindtap="handlePortionClear" aria-role="button" aria-label="清空搜索">×</view>
+                <view class="search-voice {{recordingFromSearch ? 'search-voice-active' : ''}}" catchtap="handleSearchVoice" aria-role="button" aria-label="{{recordingFromSearch ? '结束录音' : '开始语音记录'}}"><view wx:if="{{recordingFromSearch}}" class="search-mic-wave search-mic-wave-left" aria-hidden="true"><view class="search-mic-bar"></view><view class="search-mic-bar"></view></view><view class="search-voice-mic" aria-hidden="true"></view><view wx:if="{{recordingFromSearch}}" class="search-mic-wave search-mic-wave-right" aria-hidden="true"><view class="search-mic-bar"></view><view class="search-mic-bar"></view></view></view>
+            </view>
+            <view class="portion-camera" bindtap="handlePhotoRecord" aria-role="button" aria-label="拍照或从相册选择"><view class="portion-camera-icon" aria-hidden="true"></view></view>
+        </view>
+        <view class="portion-card portion-dropdown" wx:if="{{foodQuery && !portionFood}}">
+            <scroll-view scroll-y class="portion-results" wx:if="{{portionMatches.length}}" aria-label="上下滑动查看更多食物">
+                <view class="portion-result" wx:for="{{portionMatches}}" wx:key="index" data-index="{{index}}" bindtap="handlePortionPick" aria-role="button"><text>{{item.name}}</text><text>{{item.portionText}} ›</text></view>
+            </scroll-view>
+            <view wx:else class="catalog-empty">未找到匹配食物</view>
+            <view class="catalog-manual {{!portionMatches.length ? 'catalog-pulse' : ''}}" bindtap="handlePortionAction" aria-role="button">＋ 手动添加</view>
+        </view>
+        <view wx:if="{{recordingFromSearch || voiceStarting}}" class="search-recording"><text>{{voiceStarting ? '正在处理录音…' : '正在录音，点麦克风结束'}}</text><text catchtap="handleSearchVoiceCancel" aria-role="button">取消</text></view>
+        <scroll-view class="catalog-pages" scroll-x bindscroll="handleCatalogPageScroll" aria-label="左右滑动查看更多分类">
+            <view class="catalog-pages-track">
+            <view class="catalog-page" wx:for="{{foodCategoryPages}}" wx:for-item="page" wx:for-index="pageIndex" wx:key="index">
+                <view class="catalog-grid">
+            <block wx:for="{{page}}" wx:key="name">
+                <view class="catalog-category {{catalogCategory === item.name ? 'catalog-selected' : ''}}" data-category="{{item.name}}" catchtap="handleCatalogCategory" aria-role="button">
+                    <image class="catalog-icon {{item.name === '我的' ? 'catalog-icon-mine' : ''}}" src="{{item.icon}}" mode="aspectFit" aria-hidden="true" /><text>{{item.name}}</text>
+                </view>
+            </block>
+                </view>
+            </view>
+            </view>
+        </scroll-view>
+        <view class="catalog-overlay-anchor">
+                <block wx:if="{{catalogCategory}}">
+                    <view wx:for="{{[catalogCategory]}}" wx:for-item="activeCategory" wx:key="*this" class="catalog-popover {{catalogRowEnd === 4 ? 'catalog-popover-first' : 'catalog-popover-second'}}" catchtap="noop">
+                        <view class="catalog-pointer" style="left:{{catalogPointer}}%" aria-hidden="true"></view>
+                        <scroll-view scroll-x class="catalog-scroll" aria-label="左右滑动查看更多食物">
+                            <view class="catalog-strip" style="width:{{catalogStripWidth}}%">
+                                <view wx:for="{{catalogColumns}}" wx:for-item="column" wx:key="key" class="catalog-column" style="flex-basis:{{catalogColumnWidth}}%">
+                                    <view class="catalog-tile {{column.top.add ? 'catalog-new' : ''}}" data-add="{{column.top.add}}" data-index="{{column.top.index}}" bindtap="handleCatalogTile" aria-role="button">
+                                        <image class="catalog-icon" src="{{column.top.icon}}" mode="aspectFit" aria-hidden="true" /><text class="catalog-tile-name">{{column.top.name}}</text>
+                                    </view>
+                                    <view wx:if="{{column.bottom}}" class="catalog-tile" data-index="{{column.bottom.index}}" bindtap="handleCatalogTile" aria-role="button">
+                                        <image class="catalog-icon" src="{{column.bottom.icon}}" mode="aspectFit" aria-hidden="true" /><text class="catalog-tile-name">{{column.bottom.name}}</text>
+                                    </view>
+                                </view>
+                            </view>
+                        </scroll-view>
+                        <text wx:if="{{catalogColumns.length > catalogVisibleColumns}}" class="catalog-scroll-hint">左右滑动查看更多</text>
+                    </view>
+                </block>
+        </view>
+        <block wx:if="{{portionFood && portionPreview}}">
+            <view class="catalog-sheet-mask" bindtap="handlePortionClose" catchtouchmove="noop"></view>
+            <view class="catalog-sheet">
+                <view class="catalog-sheet-grip"></view>
+                <view class="portion-food">
+                    <image class="catalog-icon" src="{{portionFood.icon}}" mode="aspectFit" aria-hidden="true" />
+                    <view><text class="portion-name">{{portionFood.name}}</text><text class="portion-note">{{portionFood.grams ? '按食用重量换算' : '参考份量 · 1' + portionFood.unit}}</text></view>
+                    <view class="catalog-sheet-close" bindtap="handlePortionClose" aria-role="button" aria-label="关闭份量">×</view>
+                </view>
+                <view wx:if="{{portionPreview.parts}}" class="catalog-breakdown">
+                    <view bindtap="handlePortionBreakdown" aria-role="button">查看米饭、荤菜和素菜重量 {{portionBreakdown ? '▴' : '▾'}}</view>
+                    <view wx:if="{{portionBreakdown}}" wx:for="{{portionPreview.parts}}" wx:key="label" class="portion-weight">
+                        <text>{{item.label}}</text><input type="digit" value="{{item.grams}}" data-index="{{index}}" bindblur="handlePortionPart" aria-label="{{item.label}}重量" /><text>g</text>
+                    </view>
+                </view>
+                <view wx:if="{{portionFood.editableBasis || portionFood.grams}}" class="portion-controls">
+                    <text wx:if="{{portionFood.editableBasis}}" class="portion-label">编辑分量</text>
+                    <view wx:if="{{portionFood.editableBasis}}" class="portion-basis-bar">
+                        <view class="portion-basis-value">
+                            <text>1{{portionFood.unit}} ·</text>
+                            <input type="digit" value="{{portionBasisInput}}" bindinput="handlePortionBasisInput" placeholder="设置重量" placeholder-style="color: #654719; font-size: 28rpx; font-weight: 500;" aria-label="设置重量" />
+                            <text wx:if="{{portionBasisInput}}">g</text>
+                        </view>
+                        <view class="portion-basis-save" bindtap="handlePortionBasisSave" aria-role="button">保存</view>
+                    </view>
+                    <text wx:if="{{portionBasisError}}" class="portion-note">{{portionBasisError}}</text>
+                    <text wx:if="{{!portionFood.editableBasis && portionFood.presets.length}}" class="portion-label">选择份量（常用）</text>
+                    <view wx:if="{{!portionFood.editableBasis && portionFood.presets.length}}" class="portion-presets">
+                        <view wx:for="{{portionFood.presets}}" wx:key="grams" class="portion-preset {{portionPreview.grams === item.grams ? 'portion-selected' : ''}}" data-grams="{{item.grams}}" bindtap="handlePortionWeight" aria-role="button">{{item.label}} {{item.grams}} {{portionFood.measure}}</view>
+                    </view>
+                    <view wx:if="{{portionFood.grams && (!portionFood.editableBasis || portionBasisAdjusted)}}" class="portion-weight"><text>{{portionFood.measure === 'mL' ? '容量' : '重量'}}</text><input type="digit" value="{{portionPreview.grams}}" bindblur="handlePortionWeight" aria-label="食物份量" /><text>{{portionFood.measure}}</text></view>
+                    <view wx:if="{{portionFood.grams && (!portionFood.editableBasis || portionBasisAdjusted)}}" class="portion-range"><text>0.1 {{portionFood.measure}}</text><slider min="0.1" step="0.1" max="{{portionFood.max}}" value="{{portionPreview.grams}}" bindchanging="handlePortionWeight" bindchange="handlePortionWeight" activeColor="#f4bd00" backgroundColor="#e7dccb" block-color="#ffcf27" block-size="18" aria-label="调整食物份量" /><text>{{portionFood.max}} {{portionFood.measure}}</text></view>
+                </view>
+                <view class="portion-nutrition">
+                    <view><text>{{portionPreview.kcal}}</text><text>热量</text></view>
+                    <view><text>{{portionPreview.protein === '—' ? '—' : portionPreview.protein + ' g'}}</text><text>蛋白质</text></view>
+                    <view><text>{{portionPreview.carb === '—' ? '—' : portionPreview.carb + ' g'}}</text><text>碳水</text></view>
+                    <view><text>{{portionPreview.fat === '—' ? '—' : portionPreview.fat + ' g'}}</text><text>脂肪</text></view>
+                </view>
+                <text class="portion-note">ⓘ 参考：{{portionFood.referenceName}} · {{portionFood.grams ? portionFood.grams + ' g' : '1' + portionFood.unit}}</text>
+                <view class="meal-add-btn portion-action" bindtap="handlePortionAction" aria-role="button"><text>加入本餐</text></view>
+            </view>
+        </block>
+    </view>
+    <view class="field-group meal-review">
+      <view class="meal-list-card">
+        <view class="meal-list-head">
+            <text class="field-label meal-list-title">本餐清单 <text class="meal-list-count">{{itemsCount}} 样</text></text>
+        <view class="meal-head-tools" wx:if="{{itemsCount > 0}}">
+            <view class="meal-estimate-badge" wx:if="{{mealAiEstimated}}"><text>AI估算 · 请核对</text><text class="estimate-info">ⓘ</text></view>
+            <text class="meal-clear {{confirmClear ? 'meal-clear-active' : ''}}" catchtap="handleClearMeal">{{confirmClear ? '确认清空' : '清空'}}</text>
+        </view>
+        </view>
+        <view class="meal-list" wx:if="{{itemsCount > 0}}"><view class="meal-item {{editingIndex === index ? 'meal-item-editing' : ''}}" wx:for="{{items}}" wx:key="key" wx:for-index="index" data-index="{{index}}" bindtap="handleEditItem"><view class="meal-food-mark"><image src="/assets/icons/card-meals.png" mode="aspectFit" /></view><view class="meal-item-main"><view class="meal-item-name-row"><text class="meal-item-name">{{item.name}}</text></view><text class="meal-item-note" wx:if="{{item.note !== ''}}">{{item.note}}</text></view><view class="meal-item-qty"><text>{{item.qtyText}}</text><text class="quantity-caret">▾</text></view><text class="meal-item-kcal">{{item.kcalText}}</text><view class="meal-item-del trash-action" data-index="{{index}}" catchtap="handleRemoveItem" aria-role="button" aria-label="删除{{item.name}}"><image src="/assets/icons/line-trash.png" mode="aspectFit" aria-hidden="true" /></view></view></view>
+        <view wx:else class="meal-empty"><text class="meal-empty-title">{{voiceRecognizing || recognizing ? '正在等待识别结果' : '先记下这一餐'}}</text><text>{{voiceRecognizing || recognizing ? '识别结果会出现在这里，请核对后保存' : '添加食物，核对份量后再保存'}}</text></view>
+      </view>
+        <view class="meal-sum" wx:if="{{itemsCount > 0}}"><view class="meal-sum-row"><text class="meal-sum-label">本餐合计</text><text class="meal-sum-kcal">{{mealTotalKcalText}}</text></view><text class="meal-sum-macro">{{mealMacroText}}</text></view>
+        <text class="field-hint meal-edit-hint" wx:if="{{itemsCount > 0}}">点击食物可修改份量与营养</text>
+    </view>
+    <view class="field-group quick-foods" wx:if="{{foods.length > 0}}"><text class="field-label">快捷添加</text><scroll-view class="food-chips-scroll" scroll-x><view class="food-chips"><view class="food-chip" wx:for="{{foods}}" wx:key="id" data-id="{{item.id}}" bindtap="handleFoodChip"><text>{{item.name}}</text></view></view></scroll-view></view>
+    <view class="entry-actions" wx:if="{{!manualOpen}}">
+        <view class="entry-action {{submitting ? 'action-disabled' : ''}}" bindtap="handleCancel" aria-role="button" aria-disabled="{{submitting}}"><text>取消</text></view>
+        <view class="entry-action entry-save {{submitting || voiceRecognizing || recognizing || nutritionEstimating || (itemsCount === 0 && !formName) ? 'action-disabled' : ''}}" bindtap="handleSave" aria-role="button" aria-disabled="{{submitting || voiceRecognizing || recognizing || nutritionEstimating || (itemsCount === 0 && !formName)}}">
+            <text>{{submitting ? '保存中…' : foodLearningPending ? '重试存入食物库' : '保存本餐'}}</text>
+        </view>
+    </view>
+
+    <!-- 键盘面板：手动记与拍照识别结果共用。键盘常驻，字段做成 chip 点选切换，数值即输即生效 -->
+    <view class="sheet-mask" wx:if="{{manualOpen}}" bindtap="handleSheetClose" catchtouchmove="noop"></view>
+    <view class="keypad-panel" wx:if="{{manualOpen}}">
+        <scroll-view class="kp-scroll" scroll-y>
+            <view class="kp-head kp-category-head">
+                <picker wx:if="{{catalogAdding}}" range="{{catalogFormCategories}}" range-key="name" bindchange="handleCatalogFormCategory">
+                    <view class="catalog-form-category">添加食物 · {{catalogAdding}} ▾</view>
+                </picker>
+                <text wx:else class="catalog-form-category">添加食物</text>
+                <text class="kp-close" catchtap="handleSheetClose">收起</text>
+            </view>
+
+            <view class="sheet-photo" wx:if="{{photoPath !== ''}}">
+                <image class="sheet-photo-image sheet-photo-small" src="{{photoPath}}" mode="aspectFill" />
+                <view class="sheet-photo-remove trash-action" catchtap="handleRemovePhoto" aria-role="button" aria-label="移除照片"><image src="/assets/icons/line-trash.png" mode="aspectFit" aria-hidden="true" /></view>
+            </view>
+            <text class="sheet-source" wx:if="{{photoSourceText !== ''}}">{{photoSourceText}}</text>
+
+            <view class="kp-namerow">
+                <view class="kp-name-wrap">
+                    <input class="kp-name" placeholder="如：米饭 / 水煮蛋" value="{{formName}}" bindinput="handleNameInput" bindfocus="handleFoodFocus" bindkeyboardheightchange="handleFoodKeyboardChange" maxlength="30" />
+                    <view class="kp-name-arrow {{foodMenuOpen ? 'kp-name-arrow-open' : ''}}" catchtap="handleToggleFoodMenu" aria-role="button" aria-label="展开食物下拉列表"><text>▾</text></view>
+                </view>
+                <view class="kp-inline-unit kp-unit-wrap">
+                    <view class="kp-quantity-value" data-field="formQty" catchtap="selectField" aria-role="button" aria-label="编辑数量"><text>{{formQty || '—'}}</text><text wx:if="{{activeField === 'formQty'}}" class="kp-caret" aria-hidden="true"></text></view>
+                    <view class="kp-unit-choice" catchtap="handleUnitToggle" aria-role="button" aria-label="选择单位"><text>{{selectedUnit === '毫升' ? 'mL' : selectedUnit === '千克' || selectedUnit === '公斤' ? 'kg' : selectedUnit}}</text><text>▾</text></view>
+                </view>
+                <view class="kp-note-btn kp-ai-btn {{!formName || nutritionEstimating ? 'kp-ai-disabled' : ''}}" hover-class="kp-btn-hover" bindtap="handleEstimateNutrition" aria-role="button" aria-disabled="{{!formName || nutritionEstimating}}">
+                    <text class="kp-note-btn-text">{{nutritionEstimating ? '估算中' : 'AI 估算'}}</text>
+                </view>
+            </view>
+
+
+            <view wx:if="{{selectedUnit !== '克' && (catalogAdding || formGramsPerUnit)}}" class="catalog-form-category" data-field="formGramsPerUnit" bindtap="handleWeightFieldTap" aria-role="button">
+                {{selectedUnit === '两' ? '1两 = 50 g · 共 ' + (formQty * 50) + ' g' : '每' + selectedUnit + '克重 ' + (formGramsPerUnit || '未填写') + (formGramsPerUnit ? ' g' : '')}}
+            </view>
+            <view class="kp-chips">
+                <view class="kp-chip {{activeField === 'formKcal' ? 'kp-chip-on' : ''}}" data-field="formKcal" bindtap="selectField">
+                    <text class="kp-chip-label">热量</text>
+                    <text class="kp-chip-value">{{formKcal === '' ? '—' : selectedUnit === '克' ? totalKcalText : formKcal}}</text>
+                </view>
+                <view class="kp-chip {{activeField === 'formCarb' ? 'kp-chip-on' : ''}}" data-field="formCarb" bindtap="selectField">
+                    <text class="kp-chip-label">碳水</text>
+                    <text class="kp-chip-value">{{formCarb === '' ? '—' : formCarb}}</text>
+                </view>
+                <view class="kp-chip {{activeField === 'formProtein' ? 'kp-chip-on' : ''}}" data-field="formProtein" bindtap="selectField">
+                    <text class="kp-chip-label">蛋白</text>
+                    <text class="kp-chip-value">{{formProtein === '' ? '—' : formProtein}}</text>
+                </view>
+                <view class="kp-chip {{activeField === 'formFat' ? 'kp-chip-on' : ''}}" data-field="formFat" bindtap="selectField">
+                    <text class="kp-chip-label">脂肪</text>
+                    <text class="kp-chip-value">{{formFat === '' ? '—' : formFat}}</text>
+                </view>
+            </view>
+        </scroll-view>
+
+<text class="kp-expression" wx:if="{{pendingCalculation}}">{{keypadValue}}</text>
+<view class="kp-grid">
+  <view class="kp-row"><view class="kp-number-row"><view class="kp-key" data-key="1" bindtap="keypadTap" aria-role="button" aria-label="1"><text>1</text></view><view class="kp-key" data-key="2" bindtap="keypadTap" aria-role="button" aria-label="2"><text>2</text></view><view class="kp-key" data-key="3" bindtap="keypadTap" aria-role="button" aria-label="3"><text>3</text></view></view><view class="kp-function-row"><view class="kp-key kp-key-op" data-key="add" bindtap="keypadTap" aria-role="button" aria-label="+"><text>+</text></view><view class="kp-key kp-key-op" data-key="divide" bindtap="keypadTap" aria-role="button" aria-label="÷"><text>÷</text></view></view></view>
+  <view class="kp-row"><view class="kp-number-row"><view class="kp-key" data-key="4" bindtap="keypadTap" aria-role="button" aria-label="4"><text>4</text></view><view class="kp-key" data-key="5" bindtap="keypadTap" aria-role="button" aria-label="5"><text>5</text></view><view class="kp-key" data-key="6" bindtap="keypadTap" aria-role="button" aria-label="6"><text>6</text></view></view><view class="kp-function-row"><view class="kp-key kp-key-op" data-key="subtract" bindtap="keypadTap" aria-role="button" aria-label="−"><text>−</text></view><view class="kp-key kp-key-op" data-key="multiply" bindtap="keypadTap" aria-role="button" aria-label="×"><text>×</text></view></view></view>
+  <view class="kp-row"><view class="kp-number-row"><view class="kp-key" data-key="7" bindtap="keypadTap" aria-role="button" aria-label="7"><text>7</text></view><view class="kp-key" data-key="8" bindtap="keypadTap" aria-role="button" aria-label="8"><text>8</text></view><view class="kp-key" data-key="9" bindtap="keypadTap" aria-role="button" aria-label="9"><text>9</text></view></view><view class="kp-function-row"><view class="kp-key" data-key="dot" bindtap="keypadTap" aria-role="button" aria-label="."><text>.</text></view><view class="kp-key kp-key-fn" data-key="back" bindtap="keypadTap" aria-role="button" aria-label="退格"><text>⌫</text></view></view></view>
+  <view class="kp-row kp-bottom-row"><view class="kp-key kp-key-zero" data-key="0" bindtap="keypadTap" aria-role="button" aria-label="0"><text>0</text></view><view class="kp-key kp-key-op kp-key-equals" data-key="equals" bindtap="keypadTap" aria-role="button" aria-label="="><text>=</text></view><view class="kp-key kp-key-fn" data-key="clear" bindtap="keypadTap" aria-role="button" aria-label="清空"><text>清空</text></view></view>
+</view>
+        <view class="kp-bar">
+            <view wx:if="{{catalogAdding}}" class="meal-add-btn kp-add" bindtap="handleCatalogSave" aria-role="button"><text>保存到食物库</text></view>
+            <view class="meal-add-btn kp-add" hover-class="meal-add-btn-hover" hover-stay-time="60" bindtap="handleAddItem">
+                <text>{{editingIndex >= 0 ? '更新这一项' : catalogAdding ? '仅加入本餐' : '加入本餐'}}</text>
+            </view>
+        </view>
+        <view class="kp-foot">
+            <text class="kp-cancel" wx:if="{{editingIndex >= 0}}" catchtap="handleCancelEdit">取消修改</text>
+            <text class="nutrition-link" wx:if="{{autoFillHint}}">{{autoFillHint}}</text>
+            <text class="nutrition-link" wx:if="{{manualOpen && formName}}">估算时发送食物名称和单位</text>
+            <text class="kp-error" wx:if="{{formError !== ''}}">{{formError}}</text>
+        </view>
+    </view>
+
+    <view class="kp-menu-mask" wx:if="{{dateOpen}}" catchtap="handleDateToggle" catchtouchmove="noop"></view>
+    <view class="kp-menu date-dropdown" wx:if="{{dateOpen}}" style="left:{{dateMenuPos.left}}px;top:{{dateMenuPos.top}}px;width:{{dateMenuPos.width}}px;" catchtap="noop">
+        <view class="date-month"><text class="date-nav {{datePrevDisabled ? 'date-disabled' : ''}}" data-step="-1" bindtap="handleDateMonth">‹</text><text>{{dateMonthLabel}}</text><text class="date-nav {{dateNextDisabled ? 'date-disabled' : ''}}" data-step="1" bindtap="handleDateMonth">›</text></view>
+        <view class="date-grid"><text class="date-week" wx:for="{{dateWeekdays}}" wx:key="*this">{{item}}</text></view>
+        <view class="date-grid"><view class="date-day {{item.value === dateValue ? 'date-selected' : ''}} {{item.disabled ? 'date-disabled' : ''}}" wx:for="{{dateDays}}" wx:key="key" data-value="{{item.value}}" bindtap="handleDatePick">{{item.day}}</view></view>
+        <view class="date-today" bindtap="handleDateReset">回到今天</view>
+    </view>
+    <view class="kp-menu-mask" wx:if="{{unitOpen}}" catchtap="handleUnitToggle" catchtouchmove="noop"></view>
+    <scroll-view class="kp-menu unit-menu" scroll-y wx:if="{{unitOpen}}" style="left:{{unitMenuPos.left}}px;top:{{unitMenuPos.top}}px;width:{{unitMenuPos.width}}px;height:300rpx;">
+        <view class="kp-menu-item" wx:for="{{unitOptions}}" wx:key="*this" data-key="{{item}}" bindtap="handleUnitPick"><text>{{item === '毫升' ? 'mL' : item === '千克' || item === '公斤' ? 'kg' : item}}</text></view>
+    </scroll-view>
+    <view class="kp-menu-mask" wx:if="{{foodMenuOpen}}" catchtap="handleCloseFoodMenu" catchtouchmove="noop"></view>
+    <scroll-view
+        class="kp-menu food-menu"
+        scroll-y
+        wx:if="{{foodMenuOpen}}"
+        style="left:{{foodMenuPos.left}}px;top:{{foodMenuPos.top}}px;width:{{foodMenuPos.width}}px;height:{{foodMenuHeight}}rpx;"
+    >
+        <view
+            class="kp-menu-item"
+            wx:for="{{foodMenu}}"
+            wx:key="name"
+            data-name="{{item.name}}"
+            data-unit="{{item.unit}}"
+            data-kcal="{{item.kcal}}"
+            bindtap="handlePickFood"
+        >
+            <text class="kp-menu-name">{{item.name}}</text>
+            <text class="kp-menu-meta">{{item.metaText}}</text>
+            <text class="kp-menu-hot" wx:if="{{item.hot}}">常吃</text>
+        </view>
+        <text class="kp-menu-tip" wx:if="{{foodMenu.length === 0}}">{{foodMenuQuery ? '没有匹配的食物，可继续手动填写' : '还没有可选食物，请手动填写'}}</text>
+    </scroll-view>
+
+    <!-- 备注弹窗：从名称行的「备注」按钮打开，写完点确定回填 -->
+    <view class="note-mask" wx:if="{{noteOpen}}" bindtap="handleNoteCancel" catchtouchmove="noop"></view>
+    <view class="note-card" wx:if="{{noteOpen}}" catchtap="noop">
+        <text class="note-title">备注</text>
+        <textarea class="note-input" value="{{noteDraft}}" bindinput="handleNoteDraft" maxlength="50" placeholder="如：半份 / 加了沙拉酱 / 少油" focus="{{noteOpen}}" />
+        <view class="note-actions">
+            <button class="note-btn" catchtap="handleNoteCancel">取消</button>
+            <button class="note-btn note-btn-primary" catchtap="handleNoteSave">确定</button>
+        </view>
+    </view>
+
+    <!-- AI 识别中：照片已拍，等待识别结果 -->
+    <view class="recognize-overlay" wx:if="{{recognizing}}">
+        <view class="recognize-card">
+            <view class="scan-brand"><image src="/assets/photo-scan-logo.png" mode="aspectFit" /><text>吃个蛋食记</text></view>
+            <text class="scan-title">正在识别这张照片</text>
+            <text class="scan-pill">分析食物中…</text>
+            <view class="scan-frame" wx:if="{{photoPath !== ''}}">
+                <image class="recognize-photo" src="{{photoPath}}" mode="aspectFill" />
+                <view class="scan-corner scan-tl"></view><view class="scan-corner scan-tr"></view>
+                <view class="scan-corner scan-bl"></view><view class="scan-corner scan-br"></view>
+                <view class="scan-beam"></view>
+            </view>
+            <view class="scan-step scan-active"><view><text>识别食物</text><text class="scan-detail">判断照片中的食物种类</text></view><view class="recognize-spinner"></view></view>
+            <view class="scan-step"><view><text>估算份量</text><text class="scan-detail">根据照片估算大致份量</text></view><text class="scan-detail">等待中…</text></view>
+            <view class="scan-step"><view><text>计算营养</text><text class="scan-detail">估算热量及三大营养素</text></view><text class="scan-detail">等待中…</text></view>
+            <view class="scan-footer">
+                <image src="/assets/photo-scan-egg.png" mode="aspectFit" />
+                <text class="scan-pill">正在认真看看，马上就好</text>
+            </view>
+        </view>
+    </view>
+    <block wx:if="{{photoSourceOpen}}">
+        <view class="photo-choice-mask" bindtap="handlePhotoSourceCancel" catchtouchmove="noop"></view>
+        <view class="photo-choice" role="dialog" aria-label="选择照片来源">
+            <view class="photo-choice-grip"></view>
+            <text class="photo-choice-title">选择照片</text>
+            <view class="photo-choice-option" data-source="camera" bindtap="handlePhotoSourcePick" aria-role="button">拍摄</view>
+            <view class="photo-choice-option" data-source="album" bindtap="handlePhotoSourcePick" aria-role="button">从相册选择</view>
+            <view class="photo-choice-cancel" bindtap="handlePhotoSourceCancel" aria-role="button">取消</view>
+        </view>
+    </block>
+</view>

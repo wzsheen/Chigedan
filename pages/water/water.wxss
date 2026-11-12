@@ -1,0 +1,347 @@
+.page {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 32rpx 32rpx 60rpx;
+}
+
+.hero-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48rpx 32rpx 40rpx;
+    border-radius: 32rpx;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(14rpx);
+    -webkit-backdrop-filter: blur(14rpx);
+    border: 2rpx solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 12rpx 40rpx rgba(100, 68, 22, 0.06);
+}
+
+.water-ring {
+    box-sizing: border-box;
+    width: 320rpx;
+    height: 320rpx;
+    padding: 26rpx;
+    border-radius: 160rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.water-ring-inner {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.water-total {
+    font-size: 68rpx;
+    font-weight: 700;
+    color: #432b1d;
+    line-height: 1.1;
+}
+
+.water-unit {
+    margin-top: 6rpx;
+    font-size: 22rpx;
+    color: #a29180;
+}
+
+.water-percent {
+    margin-top: 10rpx;
+    font-size: 26rpx;
+    font-weight: 600;
+    color: #3b9ae1;
+}
+
+.water-status {
+    margin-top: 28rpx;
+    font-size: 27rpx;
+    color: #55595f;
+}
+
+.error-tip {
+    margin-top: 20rpx;
+    padding: 18rpx 24rpx;
+    border-radius: 16rpx;
+    background: rgba(229, 72, 77, 0.1);
+    color: #c0353a;
+    font-size: 25rpx;
+}
+
+.card {
+    margin-top: 24rpx;
+    padding: 28rpx 32rpx;
+    border-radius: 28rpx;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(14rpx);
+    -webkit-backdrop-filter: blur(14rpx);
+    border: 2rpx solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 12rpx 40rpx rgba(100, 68, 22, 0.05);
+}
+
+.card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 28rpx;
+    font-weight: 600;
+    color: #432b1d;
+}
+
+.card-hint {
+    display: block;
+    margin-top: 16rpx;
+    font-size: 23rpx;
+    color: #a29180;
+    line-height: 1.5;
+}
+
+.quick-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 22rpx;
+}
+
+.quick-btn {
+    flex: 1;
+    margin-right: 16rpx;
+    height: 108rpx;
+    border-radius: 22rpx;
+    background: rgba(59, 154, 225, 0.12);
+    border: 2rpx solid rgba(59, 154, 225, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-btn:last-child {
+    margin-right: 0;
+}
+
+.quick-btn-hover {
+    background: rgba(59, 154, 225, 0.24);
+}
+
+.quick-btn-text {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #2b7fb8;
+    line-height: 1.2;
+}
+
+.quick-btn-unit {
+    font-size: 20rpx;
+    color: #6ba6cc;
+}
+
+.custom-row {
+    display: flex;
+    align-items: center;
+    margin-top: 22rpx;
+}
+
+/* 单位放进输入框内：外框负责边框底色，input 透明无边框，ml 贴在右侧 */
+.custom-box {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    height: 84rpx;
+    padding: 0 22rpx 0 24rpx;
+    border-radius: 16rpx;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2rpx solid rgba(255, 255, 255, 0.8);
+}
+
+.custom-input {
+    flex: 1;
+    min-width: 0;
+    height: 80rpx;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 28rpx;
+    line-height: 80rpx;
+}
+
+.custom-unit {
+    flex: none;
+    margin-left: 10rpx;
+    font-size: 24rpx;
+    color: #a29180;
+}
+
+.custom-btn {
+    margin-left: 14rpx;
+    padding: 0 34rpx;
+    height: 84rpx;
+    border-radius: 16rpx;
+    background: linear-gradient(135deg, #58b0e8, #3b9ae1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8rpx 24rpx rgba(59, 154, 225, 0.28);
+}
+
+.custom-btn text {
+    font-size: 28rpx;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.custom-btn-hover {
+    opacity: 0.85;
+}
+
+.goal-row {
+    display: flex;
+    align-items: center;
+    margin-top: 22rpx;
+}
+
+.goal-step {
+    width: 68rpx;
+    height: 84rpx;
+    border-radius: 16rpx;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2rpx solid rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.goal-step text {
+    font-size: 34rpx;
+    color: #55595f;
+    line-height: 1;
+}
+
+.goal-box {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 188rpx;
+    height: 84rpx;
+    margin: 0 14rpx;
+    padding: 0 16rpx;
+    border-radius: 16rpx;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2rpx solid rgba(255, 255, 255, 0.8);
+}
+
+.goal-input {
+    flex: 1;
+    min-width: 0;
+    height: 80rpx;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 30rpx;
+    text-align: center;
+    line-height: 80rpx;
+}
+
+.goal-unit {
+    flex: none;
+    margin-left: 4rpx;
+    font-size: 22rpx;
+    color: #a29180;
+}
+
+.goal-save {
+    flex: 1;
+    margin-left: 14rpx;
+    height: 84rpx;
+    border-radius: 16rpx;
+    background: linear-gradient(135deg, #ffd555, #a76b11);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8rpx 24rpx rgba(230, 174, 26, 0.28);
+}
+
+.goal-save text {
+    font-size: 28rpx;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.goal-save-hover {
+    opacity: 0.85;
+}
+
+.entry-empty {
+    padding: 32rpx 0 12rpx;
+    text-align: center;
+    font-size: 25rpx;
+    color: #9aa0a8;
+}
+
+.entry-item {
+    display: flex;
+    align-items: center;
+    padding: 22rpx 0;
+    border-bottom: 2rpx solid rgba(100, 68, 22, 0.06);
+}
+
+.entry-item:last-child {
+    border-bottom: none;
+}
+
+.entry-time {
+    width: 110rpx;
+    font-size: 25rpx;
+    color: #a29180;
+}
+
+.entry-ml {
+    flex: 1;
+    font-size: 28rpx;
+    color: #432b1d;
+    font-weight: 500;
+}
+
+.entry-del {
+    padding: 12rpx 4rpx 12rpx 20rpx;
+    flex-shrink: 0;
+    font-size: 24rpx;
+    line-height: 1;
+    color: #a29180;
+}
+
+.entry-del-active {
+    color: #e5484d;
+    font-weight: 600;
+}
+
+.entry-clear {
+    font-size: 24rpx;
+    color: #c0353a;
+}
+
+.entry-clear-active {
+    color: #e5484d;
+    font-weight: 600;
+}
+
+.page-bottom-space {
+    height: 40rpx;
+}
+
+@import "../../styles/cream.wxss";
+
+.page .custom-row .custom-btn{flex-shrink:0;box-sizing:border-box;margin-right:0;margin-left:20rpx}
+
+@import "../../styles/surfaces.wxss";

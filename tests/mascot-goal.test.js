@@ -1,0 +1,21 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const settings=require('../utils/settings');
+const animation=require('../utils/mascot-animation');
+test('每天首次完整播放三次，退出中断后可重试，导览和关闭动画时不播放',t=>{
+ let def,id=0,now=new Date(2026,10,5,12).getTime();const timers=new Map(),store=new Map();
+ t.mock.method(Date,'now',()=>now);
+ t.mock.method(settings,'needsPlanGuide',()=>false);
+ t.mock.method(global,'setTimeout',(fn,ms)=>{timers.set(++id,{fn,ms});return id});
+ t.mock.method(global,'clearTimeout',key=>timers.delete(key));
+ const oldPage=global.Page,oldWx=global.wx;t.after(()=>{global.Page=oldPage;global.wx=oldWx});
+ global.wx={getStorageSync:k=>store.get(k),setStorageSync:(k,v)=>store.set(k,v)};
+ global.Page=v=>{def=v};delete require.cache[require.resolve('../pages/index/index')];require('../pages/index/index');
+ const p={...def,homeVisible:true,data:{...structuredClone(def.data),viewState:'ready'}};p.setData=x=>Object.assign(p.data,x);
+ assert.equal(p.startDailyGoalReminder(),true);assert.equal(p.data.mascotState,'goal');assert.equal(timers.get(p.mascotTimer).ms,animation.duration('goal')*3);
+ p.onHide();assert.equal(store.size,0);assert.equal(p.data.goalReminderVisible,false);
+ p.homeVisible=true;assert.equal(p.startDailyGoalReminder(),true);
+ const end=timers.get(p.mascotTimer);timers.delete(p.mascotTimer);end.fn();assert.equal(store.get('cal_goal_reminder_date'),'2026-11-05');
+ assert.equal(p.startDailyGoalReminder(),false);p.onHide();p.homeVisible=true;p.data.mascotAnimation=false;store.clear();assert.equal(p.startDailyGoalReminder(),false);
+ p.data.mascotAnimation=true;p.data.planGuideOpen=true;assert.equal(p.startDailyGoalReminder(),false);
+});

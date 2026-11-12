@@ -1,0 +1,75 @@
+<view class="page {{uiThemeClass}}" style="padding-top:{{homeTopInset}}px;">
+  <view class="brand-header">
+    <image class="brand-slogan" style="max-width:{{sloganMaxWidth}}px;" src="/assets/slogan-home.png" mode="aspectFit" aria-label="记录每一餐，吃出更好的自己" />
+  </view>
+  <view wx:if="{{viewState === 'loading'}}" class="state-card"><text>正在准备今天的手账…</text></view>
+  <view wx:elif="{{viewState === 'error'}}" class="state-card"><text>暂时没能读取记录</text><text class="muted">下拉刷新，再试一次</text></view>
+  <block wx:else>
+    <view class="energy-card energy-{{diet.kind}}" style="{{uiResolvedTheme !== 'dark' && diet.surface ? 'background: ' + diet.surface + ';' : ''}}">
+      <view class="card-top"><text class="today-title">今天 <text class="date">{{dateText}}</text></text></view>
+      <view class="energy-overview">
+        <view wx:if="{{goalReminderVisible}}" class="goal-reminder-bubble">记得点这里设置今日新目标哦！</view>
+        <view wx:elif="{{mascotState === 'spring' || mascotState === 'lantern' || mascotState === 'dragonboat' || mascotState === 'midautumn' || mascotState === 'halloween' || mascotState === 'christmas'}}" class="goal-reminder-bubble">{{mascotState === 'spring' ? '新春快乐，万事顺意！' : mascotState === 'lantern' ? '元宵快乐，团团圆圆！' : mascotState === 'dragonboat' ? '端午安康！' : mascotState === 'midautumn' ? '中秋快乐，月圆人圆！' : mascotState === 'halloween' ? '万圣节快乐！' : '圣诞快乐！'}}</view>
+        <view class="energy-copy" bindtap="handleOpenGoal" aria-role="button" aria-label="计划制定，点击热量数字调整计划">
+          <view class="energy-display" aria-label="{{energyEmpty ? '今天尚未记录' : '已摄入 ' + todayKcalText + ' ' + energyUnit}}"><view wx:if="{{energyEmpty}}" class="energy-empty" aria-hidden="true"><view></view><view></view></view><view wx:else class="energy-digits"><image wx:for="{{energyDigits}}" wx:key="index" class="energy-digit {{item === '.' ? 'energy-dot' : ''}}" src="/assets/digits/{{item === '.' ? 'dot' : item}}.png" mode="scaleToFill" aria-hidden="true" /></view><text class="energy-unit">{{energyUnit}}</text></view>
+          <view class="energy-meta" aria-role="button" aria-label="调整每日目标，{{goalText}}"><view class="goal-edit-label"><text>目标 <text class="goal-number">{{goalValueText}}</text><text class="meta-unit"> {{energyUnit}}</text></text><text class="goal-edit-chevron" aria-hidden="true">›</text></view><text class="meta-divider">|</text><text class="{{overGoal ? 'over' : ''}}">{{overGoal ? '超出' : '还剩'}} <text class="goal-number">{{remainingValueText}}</text><text class="meta-unit"> {{energyUnit}}</text></text></view>
+        </view>
+        <view class="hero-mascot"><egg-mascot state="{{mascotState}}" animated="{{mascotAnimation}}" event-token="{{mascotEventToken}}" /><view class="mascot-rays" aria-hidden="true"><view></view><view></view><view></view></view></view>
+      </view>
+      <view class="macros"><view class="macro macro-{{item.key}}" wx:for="{{macroCards}}" wx:key="key"><text class="macro-name">{{item.label}}</text><view class="macro-value">{{item.value}}<text> / {{item.target}}g</text></view><view class="macro-track"><view style="width:{{item.width}}%;"></view></view></view></view>
+      <view class="diet-message" bindtap="handleAdviceTap" aria-role="button" aria-label="{{diet.title}}，{{diet.action}}"><image wx:if="{{diet.kind === 'good'}}" class="diet-leaf" src="/assets/icons/card-leaf.png" mode="aspectFit" aria-hidden="true" /><text wx:else class="diet-dot">{{diet.kind === 'adjust' ? '!' : '+'}}</text><text class="diet-title">{{diet.kind === 'good' ? '搭配不错，继续保持！' : diet.title}}</text><text wx:if="{{diet.kind !== 'good'}}" class="diet-action">›</text></view>
+    </view>
+    <view class="science-card">
+      <view class="science-book" bindtap="handleKnowledge"><image class="science-line-icon" src="/assets/icons/line-science.png" mode="aspectFit" aria-hidden="true" /></view>
+      <swiper class="science-swiper" vertical circular autoplay="{{scienceAutoplay}}" interval="7000" duration="500" current="{{scienceIndex}}" bindchange="handleScienceChange" bindtouchstart="pauseScience" bindtouchend="resumeScience" bindtouchcancel="resumeScience">
+        <swiper-item wx:for="{{scienceArticles}}" wx:key="id"><view class="science-item" data-id="{{item.id}}" bindtap="handleKnowledge"><text class="science-label">饮食科普</text><text class="science-title">{{item.title}}</text></view></swiper-item>
+      </swiper>
+      <view class="science-more" bindtap="handleKnowledge" aria-role="button" aria-label="查看饮食科普">›</view>
+    </view>
+    <view class="body-card {{bmiFlash ? 'body-flash' : ''}}" bindtap="handleOpenBody" aria-role="button" aria-label="身体状态。{{weightHint}}，BMI {{bmiText}}，{{bmiLevelText}}，成人 BMI 仅供参考">
+      <view class="card-icon body-icon"><image src="/assets/icons/card-body.png" mode="aspectFit" aria-hidden="true" /></view>
+      <view class="body-content"><view class="body-header">身体状态</view>
+        <view class="body-metrics"><view class="body-metric"><text class="body-value">{{heightValueText}}<text class="body-unit" wx:if="{{!heightEmpty}}"> cm</text></text><text class="body-label">身高</text></view><view class="body-metric"><text class="body-value">{{weightValueText}}<text class="body-unit" wx:if="{{weightValueText !== '—'}}"> {{weightUnitText}}</text></text><text class="body-label">体重</text></view><view class="body-metric"><text class="body-value {{bmiToneClass}}">{{bmiText}}</text><text class="body-label">BMI</text></view></view>
+      </view><text class="card-chevron">›</text>
+    </view>
+    <view class="meals-card">
+      <view class="section-head" bindtap="handleHistory" aria-role="button" aria-label="查看饮食历史"><view class="card-icon meals-icon"><image src="/assets/icons/card-meals.png" mode="aspectFit" aria-hidden="true" /></view><text>今天吃了什么</text><text class="card-chevron">›</text></view>
+      <view class="meal-block" wx:for="{{groups}}" wx:key="key" wx:for-item="group">
+        <view class="meal-row" data-key="{{group.key}}" bindtap="handleMealTap" aria-role="button" aria-label="展开{{group.label}}记录">
+          <view class="meal-art art-{{group.key}}"><image wx:if="{{group.key === 'breakfast' || group.key === 'lunch' || group.key === 'dinner'}}" class="meal-line-icon" src="/assets/icons/line-{{group.key}}.png" mode="aspectFit" aria-hidden="true" /><image wx:else class="meal-line-icon" src="/assets/icons/line-snack.svg" mode="aspectFit" aria-hidden="true" /></view>
+          <view class="meal-copy"><text class="meal-title">{{group.label}}</text><text class="meal-summary">{{group.items.length ? group.summary : '还没记录，慢慢享用'}}</text></view>
+          <view class="meal-energy"><block wx:if="{{group.items.length}}"><text class="meal-energy-value">{{group.totalValueText}}</text><text class="meal-energy-unit"> {{energyUnit}}</text></block><text wx:else class="meal-pending">待记录</text></view>
+        </view>
+        <view class="meal-detail" wx:if="{{expandedMeal === group.key}}">
+          <view class="record-row" wx:for="{{group.items}}" wx:key="id"><view class="record-copy"><view class="record-name"><text class="record-name-text">{{item.name}}</text><text class="record-qty">{{item.qtyText}}</text></view><text class="record-note">{{item.macroText}}</text></view><view class="record-side"><text class="record-energy">{{item.kcalText}}</text><text class="record-source {{item.sourceText === 'AI估算' ? 'record-source-ai' : 'record-source-library'}}" wx:if="{{item.sourceText}}">{{item.sourceText}}</text></view><view class="delete trash-action {{pendingDeleteId === item.id ? 'delete-pending' : ''}}" data-id="{{item.id}}" catchtap="handleDelete" aria-role="button" aria-label="{{pendingDeleteId === item.id ? '再次点击确认删除' : '删除记录'}}"><image src="/assets/icons/line-trash{{pendingDeleteId === item.id ? '-confirm' : ''}}.png" mode="aspectFit" aria-hidden="true" /></view></view>
+          <view class="add-meal" data-key="{{group.key}}" bindtap="handleAddMeal">＋ 添加{{group.label}}食物</view>
+        </view>
+      </view>
+    </view>
+    <view class="water-card">
+      <!-- 热区到「2000 ml ▾」结尾为止（红线处）：图标、标题、数字行可点；＋水 按钮用 catchtap 独占，不会误触 -->
+      <view class="water-symbol" bindtap="handleOpenWater" aria-role="button" aria-label="设置每日饮水目标"><image class="water-line-icon" src="/assets/icons/line-water.png" mode="aspectFit" aria-hidden="true" /></view>
+      <view class="water-copy"><text class="water-title" bindtap="handleOpenWater">饮水</text><view class="water-statline"><view class="water-amount" bindtap="handleOpenWater" aria-role="button" aria-label="设置每日饮水目标，当前目标{{waterGoalText}}毫升"><text class="water-number">{{waterTotalText}}</text><text class="water-target"> / {{waterGoalText}} ml ▾</text></view><view class="water-quick"><view class="water-add" wx:for="{{waterShortcuts}}" wx:key="*this" data-ml="{{item}}" catchtap="handleWaterAdd" aria-role="button" aria-label="添加{{item}}毫升饮水">＋{{item}}ml</view></view></view><view class="water-track"><view style="{{waterBarStyle}}"></view></view></view>
+    </view>
+    <view class="insight" bindtap="handleOpenAnalysis"><view class="insight-icon">↗</view><view class="insight-copy"><text class="insight-title">看看饮食的变化</text><text class="insight-sub">营养结构、饮水与体重趋势</text></view><text class="chevron">›</text></view>
+  </block>
+  <app-dock id="home-dock" opacity="{{navOpacity}}" blur="{{navBlur}}" glass="{{navGlass}}" theme="{{uiResolvedTheme}}" active="home" />
+  <view wx:if="{{waterGoalOpen}}" class="water-goal-mask" bindtap="closeWaterGoal" catchtouchmove="preventGuideScroll">
+    <view class="water-goal-dialog" catchtap="preventGuideScroll" aria-role="dialog" aria-label="每日饮水目标">
+      <text class="water-goal-title">每日饮水目标</text><text class="water-goal-note">调整目标不会改变已记录的饮水量。</text>
+      <view class="water-goal-input-row"><button size="mini" data-delta="-100" bindtap="stepWaterGoal" aria-label="减少100毫升">−</button><view class="water-goal-field"><input type="number" value="{{waterGoalDraft}}" bindinput="inputWaterGoal" maxlength="4" cursor-spacing="24" confirm-type="done" bindconfirm="saveWaterGoal" aria-label="每日饮水目标，单位毫升" /><text>ml</text></view><button size="mini" data-delta="100" bindtap="stepWaterGoal" aria-label="增加100毫升">＋</button></view>
+      <text class="water-goal-note">可设置300–6000 ml，每次增减100 ml。</text><text class="water-goal-error" wx:if="{{waterGoalError}}">{{waterGoalError}}</text>
+      <view class="water-goal-actions"><button size="mini" bindtap="closeWaterGoal">取消</button><button size="mini" class="water-goal-save" bindtap="saveWaterGoal">保存目标</button></view>
+    </view>
+  </view>
+  <view wx:if="{{planGuideOpen}}" class="entry-guide" catchtouchmove="preventGuideScroll">
+    <view class="entry-guide-spot {{planGuideStep === 1 ? 'entry-guide-round' : ''}}" style="{{planGuideSpotStyle}}"></view>
+    <view class="entry-guide-tip" style="{{planGuideTipStyle}}" aria-role="dialog" aria-label="功能入口导览，第{{planGuideStep + 1}}步，共3步">
+      <text class="entry-guide-progress">{{planGuideStep + 1}} / 3 · 功能入口</text>
+      <text class="entry-guide-title">{{planGuideStep === 0 ? '点这里，设置你的目标哦！' : planGuideStep === 1 ? '点这里，添加饮食记录' : '点这里，设置每日饮水目标'}}</text>
+      <text class="entry-guide-copy">{{planGuideStep === 0 ? '填写身体资料、选择活动强度并设置目标。' : planGuideStep === 1 ? '短按展开「手动记」「拍照记」；长按语音记餐，松开发送，上划取消。' : '点击饮水量和目标数字，可调整每日饮水目标。'}}</text>
+      <text class="entry-guide-error" wx:if="{{planGuideError}}">{{planGuideError}}</text>
+      <view class="entry-guide-actions"><button class="entry-guide-skip" bindtap="handlePlanGuideSkip">跳过引导</button><button class="entry-guide-next" bindtap="handlePlanGuideNext">{{planGuideStep < 2 ? '下一步' : '知道了，开始使用'}}</button></view>
+    </view>
+  </view>
+</view>

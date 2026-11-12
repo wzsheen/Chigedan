@@ -1,0 +1,25 @@
+<view wx:if="{{active !== 'profile' && expanded}}" class="dismiss" bindtap="close" catchtouchmove="noop"></view>
+<view wx:if="{{active !== 'profile'}}" class="float {{theme === 'dark' ? 'float-dark' : ''}} {{active === 'home' ? 'home-float' : ''}} {{expanded ? 'is-open' : ''}} {{recording ? 'is-recording' : ''}} {{canceling ? 'is-canceling' : ''}}">
+  <view class="liquid-surface" aria-hidden="true"></view>
+  <view class="recording-surface" aria-hidden="true"></view>
+  <view wx:if="{{expanded}}" class="quick-card" catchtap="noop">
+    <textarea class="quick-input" value="{{quickText}}" bindinput="quickInput" maxlength="300" placeholder="试试快捷记，如输入：今天吃了二两小面，一个煎蛋" placeholder-class="quick-placeholder" adjust-position="{{true}}" aria-label="输入吃了什么" />
+    <view class="quick-confirm" catchtap="quickSubmit" aria-role="button" aria-label="确认识别" aria-disabled="{{quickSubmitting}}">✓</view>
+    <view class="quick-actions"><view class="quick-hint"><text>点</text><view class="quick-hint-check" aria-hidden="true">✓</view><text>自动识别</text></view><view class="quick-button" catchtap="manual" aria-role="button"><image class="quick-icon" src="/assets/icons/line-pencil.png" mode="aspectFit" /><text>手动记</text></view><view class="quick-button" catchtap="photo" aria-role="button"><view class="camera"></view><text>拍照记</text></view></view>
+  </view>
+  <view wx:if="{{recording}}" class="listening" aria-live="polite">
+    <text>{{canceling ? '松开取消' : '正在聆听'}} {{secondsText}}</text>
+    <view class="wave"><view class="wave-bar" wx:for="{{bars}}" wx:key="index" style="height: {{item}}rpx; animation-delay: {{index * 65}}ms;"></view></view>
+    <text class="record-hint">{{canceling ? '这段语音不会保存' : '松开识别 · 上滑取消'}}</text>
+  </view>
+  <text wx:if="{{!expanded && !recording && !busy}}" class="float-hint">点击添加 · 长按语音</text>
+  <view class="fab {{busy ? 'busy' : ''}}" aria-role="button" aria-label="点击添加，长按语音记录" bindtap="toggle" catchtouchstart="touchStart" bindlongpress="longPress" catchtouchmove="touchMove" catchtouchend="touchEnd" catchtouchcancel="touchCancel">
+    <view hidden="{{!recording}}" class="mic"><view class="mic-body"></view></view>
+    <view hidden="{{recording}}" class="plus {{expanded ? 'rotated' : ''}}"></view>
+  </view>
+</view>
+<view class="dock {{theme === 'dark' ? 'dock-dark' : ''}}" style="background:rgba({{theme === 'dark' ? '29,34,44' : '255,253,245'}},{{glass ? opacity / 100 : 1}});backdrop-filter:{{glass ? 'blur(' + blur + 'px) saturate(145%)' : 'none'}};-webkit-backdrop-filter:{{glass ? 'blur(' + blur + 'px) saturate(145%)' : 'none'}}">
+  <view class="tab {{active === 'home' ? 'selected' : ''}}" data-page="home" bindtap="navigate" aria-role="button" aria-label="今日"><image class="today-line-icon" src="{{active === 'home' ? '/assets/icons/line-today.png' : '/assets/icons/line-today-inactive.png'}}" mode="aspectFit" aria-hidden="true" /><text>今日</text></view>
+  <view class="tab {{active === 'analysis' ? 'selected' : ''}}" data-page="analysis" bindtap="navigate" aria-role="button" aria-label="趋势"><view class="trend-icon"><view class="trend-bar"></view><view class="trend-bar"></view><view class="trend-bar"></view></view><text>趋势</text></view>
+  <view class="tab {{active === 'profile' ? 'selected' : ''}}" data-page="profile" bindtap="navigate" aria-role="button" aria-label="我的"><view class="person-icon"></view><text>我的</text></view>
+</view>

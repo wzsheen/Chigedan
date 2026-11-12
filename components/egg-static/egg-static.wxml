@@ -1,0 +1,1 @@
+<image class="still" style="{{artworkStyle}}" src="/assets/mascot/{{pose}}-0.png" mode="aspectFit" aria-role="img" aria-label="蛋仔：{{label}}" />

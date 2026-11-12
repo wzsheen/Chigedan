@@ -1,0 +1,69 @@
+<view class="page {{uiThemeClass}}">
+    <view class="history-tabs"><view class="history-tab {{historyTab === 'food' ? 'history-tab-active' : ''}}" data-tab="food" bindtap="switchHistoryTab" aria-role="button">饮食记录</view><view class="history-tab {{historyTab === 'body' ? 'history-tab-active' : ''}}" data-tab="body" bindtap="switchHistoryTab" aria-role="button">身体记录</view></view>
+    <block wx:if="{{historyTab === 'food'}}">
+    <view class="state-card" wx:if="{{viewState === 'loading'}}">
+        <view class="spinner"></view>
+        <text class="state-title">正在加载</text>
+    </view>
+
+    <view class="state-card" wx:elif="{{viewState === 'empty'}}">
+        <text class="state-icon">📊</text>
+        <text class="state-title">还没有记录</text>
+        <text class="state-desc">去记下今天的第一笔吧</text>
+        <button class="primary-button" bindtap="handleGoToday">去记录</button>
+    </view>
+
+    <view class="state-card" wx:elif="{{viewState === 'error'}}">
+        <text class="state-icon">!</text>
+        <text class="state-title">加载失败</text>
+        <text class="state-desc">存储读取异常，请重试</text>
+    </view>
+
+    <view class="day-list" wx:else>
+        <view class="day-card" wx:for="{{days}}" wx:key="date" wx:for-item="day">
+            <view class="day-head" bindtap="toggleDay" data-date="{{day.date}}" hover-class="day-head-hover">
+                <view class="day-info">
+                    <text class="day-date">{{day.dateText}}</text>
+                    <view class="day-head-right">
+                        <text class="day-total {{day.overGoal ? 'day-total-over' : ''}}">{{day.totalText}}<text class="day-percent" wx:if="{{day.percentText !== ''}}"> · {{day.percentText}}</text></text>
+                        <text class="day-caret {{day.open ? 'day-caret-open' : ''}}">›</text>
+                    </view>
+                </view>
+                <view class="day-bar">
+                    <view class="day-bar-fill" style="{{day.barStyle}}"></view>
+                </view>
+            </view>
+            <view class="day-detail" wx:if="{{day.open}}">
+                <view class="record-item" wx:for="{{day.items}}" wx:key="id">
+                    <text class="record-meal">{{item.mealLabel}}</text>
+                    <text class="record-name">{{item.hasVoice ? '🎙️ ' : ''}}{{item.name}}</text>
+                    <text class="record-kcal">{{item.kcalText}}</text>
+                    <view
+                        class="record-delete trash-action {{pendingDeleteId === item.id ? 'record-delete-active' : ''}}"
+                        data-id="{{item.id}}"
+                        catchtap="handleDelete"
+                     aria-role="button" aria-label="{{pendingDeleteId === item.id ? '再次点击确认删除' : '删除记录'}}"><image src="/assets/icons/line-trash{{pendingDeleteId === item.id ? '-confirm' : ''}}.png" mode="aspectFit" aria-hidden="true" /></view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    </block>
+    <block wx:else>
+        <view class="body-metric-tabs">
+            <view wx:for="{{bodyGroups}}" wx:for-item="group" wx:key="key" class="body-metric-tab {{bodyMetric === group.key ? 'body-metric-active' : ''}}" data-metric="{{group.key}}" bindtap="switchBodyMetric" aria-role="button">{{group.label}}</view>
+        </view>
+        <view wx:if="{{bodyError}}" class="state-card"><text class="state-desc">{{bodyError}}</text></view>
+        <block wx:else><block wx:for="{{bodyGroups}}" wx:for-item="group" wx:key="key">
+            <block wx:if="{{bodyMetric === group.key}}">
+                <view wx:if="{{!group.rows.length}}" class="state-card"><text class="state-title">暂无{{group.label}}记录</text></view>
+                <view wx:else class="day-card body-history-group">
+                    <view class="body-history-row" wx:for="{{group.rows}}" wx:for-item="entry" wx:key="key">
+                        <view class="body-history-main"><text class="body-history-date">{{entry.date}} {{entry.time}}</text><text class="body-history-values">{{entry.value}}</text></view>
+                        <view class="record-delete trash-action {{pendingDeleteId === 'body-' + entry.key ? 'record-delete-active' : ''}}" data-index="{{entry.index}}" data-field="{{group.key}}" catchtap="handleDeleteBody" aria-role="button" aria-label="{{pendingDeleteId === 'body-' + entry.key ? '再次点击确认删除' : '删除' + group.label + '记录'}}"><image src="/assets/icons/line-trash{{pendingDeleteId === 'body-' + entry.key ? '-confirm' : ''}}.png" mode="aspectFit" aria-hidden="true" /></view>
+                    </view>
+                </view>
+            </block>
+        </block></block>
+    </block>
+</view>

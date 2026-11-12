@@ -1,0 +1,6 @@
+:host{display:block;width:156rpx;height:156rpx}
+.mascot{position:relative;width:156rpx;height:156rpx}
+.mascot-fallback{position:absolute;left:0;top:0;width:156rpx;height:156rpx}
+.mascot-viewport{position:absolute;top:0;left:6rpx;width:144rpx;height:156rpx;overflow:hidden}
+.mascot-loading{opacity:0}
+.mascot-atlas{position:absolute;width:1152rpx;height:1248rpx;max-width:none;pointer-events:none}

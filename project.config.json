@@ -1,0 +1,180 @@
+{
+  "description": "吃个蛋 · 记录每一餐，吃出更好的自己",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": ".workbuddy",
+        "type": "folder"
+      },
+      {
+        "value": "tests",
+        "type": "folder"
+      },
+      {
+        "value": "scripts",
+        "type": "folder"
+      },
+      {
+        "value": "assets/logo.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/logo.webp",
+        "type": "file"
+      },
+      {
+        "value": "README.md",
+        "type": "file"
+      },
+      {
+        "value": "supabase",
+        "type": "folder"
+      },
+      {
+        "value": "TASKS.md",
+        "type": "file"
+      },
+      {
+        "value": "PROJECT.md",
+        "type": "file"
+      },
+      {
+        "value": "AGENTS.md",
+        "type": "file"
+      },
+      {
+        "value": "assets/mascot/idle-1.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/mascot/balanced-1.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/mascot/adjust-1.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/mascot/water-1.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/mascot/sleep-1.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/brand-logo.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/avocado.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/cat.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/cloud.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/peach.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/penguin.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/star.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/sun.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/whale.png",
+        "type": "file"
+      },
+      {
+        "value": "miniapp/android/icons",
+        "type": "folder"
+      },
+      {
+        "value": "assets/avatars/avocado.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/cat.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/cloud.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/peach.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/penguin.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/star.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/sun.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/avatars/whale.webp",
+        "type": "file"
+      },
+      {
+        "value": "assets/brand-logo.webp",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "bundle": false,
+    "es6": true,
+    "minified": true,
+    "postcss": true,
+    "urlCheck": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "enhance": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": true,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "appid": "wx6170e11e629e72e4",
+  "projectname": "Chigedan",
+  "miniprogramRoot": "./",
+  "simulatorPluginLibVersion": {
+    "wxext14566970e7e9f62": "2.27.3"
+  },
+  "editorSetting": {},
+  "isGameTourist": false,
+  "projectArchitecture": "multiPlatform"
+}

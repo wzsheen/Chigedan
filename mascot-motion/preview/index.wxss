@@ -1,0 +1,1 @@
+.preview-page{padding:24rpx;background:#fffbef;min-height:100vh;box-sizing:border-box}.preview-row{display:flex;align-items:center;gap:24rpx;margin-bottom:16rpx;color:#60432e;font-size:26rpx}

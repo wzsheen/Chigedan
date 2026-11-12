@@ -1,0 +1,126 @@
+<view class="page {{uiThemeClass}}">
+    <view class="header">
+        <text class="page-title">数据总览</text>
+        <text class="page-sub">基于本机全部记录统计，不上传</text>
+    </view>
+
+    <view class="state-card" wx:if="{{viewState === 'loading'}}">
+        <view class="spinner"></view>
+        <text class="state-title">正在统计</text>
+    </view>
+
+    <view class="state-card" wx:elif="{{viewState === 'error'}}">
+        <text class="state-title">读取失败</text>
+        <text class="state-hint">下拉刷新再试一次</text>
+    </view>
+
+    <view class="state-card" wx:elif="{{viewState === 'empty'}}">
+        <text class="state-title">还没有可统计的数据</text>
+        <text class="state-hint">记上几笔之后，这里会显示记录天数、达标情况和常吃食物</text>
+        <view class="state-btn" bindtap="handleGoAdd">去记一笔</view>
+    </view>
+
+    <block wx:else>
+        <view class="overview-card">
+            <view class="overview-grid">
+                <view class="overview-cell">
+                    <text class="overview-label">记录天数</text>
+                    <view class="overview-value-line">
+                        <text class="overview-value">{{dayCount}}</text>
+                        <text class="overview-unit">天</text>
+                    </view>
+                </view>
+                <view class="overview-cell">
+                    <text class="overview-label">连续记录</text>
+                    <view class="overview-value-line">
+                        <text class="overview-value">{{streak}}</text>
+                        <text class="overview-unit">天</text>
+                    </view>
+                </view>
+                <view class="overview-cell">
+                    <text class="overview-label">达标天数</text>
+                    <view class="overview-value-line">
+                        <text class="overview-value">{{goodDays}}</text>
+                        <text class="overview-unit">天</text>
+                    </view>
+                </view>
+                <view class="overview-cell">
+                    <text class="overview-label">日均摄入</text>
+                    <view class="overview-value-line">
+                        <text class="overview-value">{{avgKcal}}</text>
+                        <text class="overview-unit">{{energyUnit}}</text>
+                    </view>
+                </view>
+            </view>
+            <text class="overview-note">达标 = 当日热量在目标 {{goal}} {{energyUnit}} 的 ±10% 内</text>
+        </view>
+
+        <view class="card">
+            <view class="card-head">
+                <text class="card-title">近 7 天</text>
+                <text class="card-hint">目标 {{goal}} {{energyUnit}}</text>
+            </view>
+            <view class="chart">
+                <view class="chart-col" wx:for="{{days}}" wx:key="key">
+                    <text class="chart-value">{{item.text}}</text>
+                    <view class="chart-track">
+                        <view class="chart-bar {{item.tone}}" style="height: {{item.height}};"></view>
+                    </view>
+                    <text class="chart-label">{{item.label}}</text>
+                </view>
+            </view>
+        </view>
+
+        <view class="card">
+            <view class="card-head">
+                <text class="card-title">营养结构</text>
+                <text class="card-hint">平均每日</text>
+            </view>
+            <block wx:if="{{macro.hasData}}">
+                <view class="macro-line">
+                    <text class="macro-name">碳水</text>
+                    <view class="macro-track">
+                        <view class="macro-fill macro-fill-carb" style="width: {{macro.cPct}}%;"></view>
+                    </view>
+                    <text class="macro-pct">{{macro.cPct}}%</text>
+                    <text class="macro-gram">{{macro.c}}g</text>
+                </view>
+                <view class="macro-line">
+                    <text class="macro-name">蛋白</text>
+                    <view class="macro-track">
+                        <view class="macro-fill macro-fill-protein" style="width: {{macro.pPct}}%;"></view>
+                    </view>
+                    <text class="macro-pct">{{macro.pPct}}%</text>
+                    <text class="macro-gram">{{macro.p}}g</text>
+                </view>
+                <view class="macro-line">
+                    <text class="macro-name">脂肪</text>
+                    <view class="macro-track">
+                        <view class="macro-fill macro-fill-fat" style="width: {{macro.fPct}}%;"></view>
+                    </view>
+                    <text class="macro-pct">{{macro.fPct}}%</text>
+                    <text class="macro-gram">{{macro.f}}g</text>
+                </view>
+            </block>
+            <text class="card-empty" wx:else>记录里的营养素都是空的，记一笔时自动估算后这里就有结构了</text>
+        </view>
+
+        <view class="card">
+            <view class="card-head">
+                <text class="card-title">最常吃</text>
+                <text class="card-hint">按次数排序</text>
+            </view>
+            <block wx:if="{{topFoods.length > 0}}">
+                <view class="food-row" wx:for="{{topFoods}}" wx:key="name">
+                    <text class="food-rank">{{index + 1}}</text>
+                    <text class="food-name">{{item.name}}</text>
+                    <text class="food-count">{{item.countText}}</text>
+                    <text class="food-kcal">{{item.kcalText}}</text>
+                </view>
+            </block>
+            <text class="card-empty" wx:else>还没有食物记录</text>
+        </view>
+
+        <text class="footnote">共 {{totalRecords}} 条记录 · 全部数据保存在本机存储</text>
+    </block>
+</view>

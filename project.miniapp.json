@@ -1,0 +1,80 @@
+{
+  "miniVersion": "v2",
+  "name": "%name%",
+  "version": "0.0.5",
+  "versionCode": 102,
+  "i18nFilePath": "i18n",
+  "mini-ohos": {
+    "sdkVersion": "0.5.1"
+  },
+  "mini-android": {
+    "resourcePath": "miniapp/android/nativeResources",
+    "sdkVersion": "1.7.0",
+    "toolkitVersion": "0.11.0",
+    "useExtendedSdk": {
+      "media": true,
+      "bluetooth": false,
+      "network": false,
+      "scanner": false,
+      "xweb": false
+    },
+    "icons": {
+      "hdpi": "miniapp/android/icons/ic_launcher_hdpi.png",
+      "xhdpi": "miniapp/android/icons/ic_launcher_xhdpi.png",
+      "xxhdpi": "miniapp/android/icons/ic_launcher_xxhdpi.png",
+      "xxxhdpi": "miniapp/android/icons/ic_launcher_xxxhdpi.png"
+    },
+    "splashscreen": {
+      "hdpi": "",
+      "xhdpi": "",
+      "xxhdpi": ""
+    },
+    "enableVConsole": "close",
+    "privacy": {
+      "enable": true,
+      "template": "miniapp-privacy.json"
+    },
+    "privateDescriptions": {
+      "CAMERA": "申请相机权限用于拍摄餐食照片，交给 AI 识别食物与份量",
+      "RECORD_AUDIO": "申请麦克风权限用于录制语音，转写为你吃下的食物与份量",
+      "READ_MEDIA_IMAGES": "申请相册读取权限用于选取餐食照片或头像，不会读取其他照片",
+      "READ_EXTERNAL_STORAGE": "申请存储读取权限用于在相册中选取餐食照片或头像（Android 12 及以下）"
+    },
+    "abi": {
+      "armeabi-v7a": true,
+      "arm64-v8a": true
+    }
+  },
+  "mini-ios": {
+    "sdkVersion": "1.7.0",
+    "toolkitVersion": "0.0.9",
+    "useExtendedSdk": {
+      "WeAppOpenFuns": true,
+      "WeAppNetwork": false,
+      "WeAppBluetooth": false,
+      "WeAppMedia": false,
+      "WeAppLBS": false,
+      "WeAppOthers": false
+    },
+    "enableVConsole": "close",
+    "icons": {
+      "mainIcon120": "",
+      "mainIcon180": "",
+      "spotlightIcon80": "",
+      "spotlightIcon120": "",
+      "settingsIcon58": "",
+      "settingsIcon87": "",
+      "notificationIcon40": "",
+      "notificationIcon60": "",
+      "appStore1024": ""
+    },
+    "splashScreen": {
+      "customImage": ""
+    },
+    "privacy": {
+      "enable": true,
+      "template": "miniapp-privacy.json"
+    },
+    "enableOpenUrlNavigate": true
+  }
+}

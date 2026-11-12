@@ -1,0 +1,19 @@
+<view class="page privacy-page {{uiThemeClass}}">
+    <view class="privacy-heading"><text class="page-title">隐私保护说明</text><text class="page-sub">更新及生效日期：{{updated}}</text></view>
+    <view class="privacy-summary">记录留在本机，AI 服务由你选择。使用前，请了解信息的用途和去向。</view>
+    <view class="card privacy-section" wx:for="{{sections}}" wx:key="title">
+        <text class="privacy-title">{{item.title}}</text>
+        <text class="privacy-paragraph" wx:for="{{item.paragraphs}}" wx:for-item="paragraph" wx:key="*this" selectable>{{paragraph}}</text>
+    </view>
+    <view wx:if="{{contact.email}}" class="privacy-contact" bindtap="handleCopyEmail" aria-role="button" aria-label="复制隐私联系邮箱"><text>隐私联系邮箱</text><text selectable>{{contact.email}}</text><text class="privacy-copy">复制邮箱</text></view>
+    <!-- 在线版：给需要对外出示的人（应用市场审核、分享给他人）留一个入口，
+         文字加粗并上色，让用户先看到全文再决定是否继续用 -->
+    <view wx:if="{{webUrl}}" class="privacy-web">
+        <view class="privacy-web-head">
+            <text class="privacy-web-label">在线版完整说明</text>
+            <text class="privacy-web-action" bindtap="handleOpenWeb" aria-role="button" aria-label="在浏览器中打开在线版隐私说明">浏览器打开 ›</text>
+        </view>
+        <text class="privacy-web-url" selectable>{{webUrl}}</text>
+    </view>
+    <text class="privacy-hint" wx:if="{{copyHint}}">{{copyHint}}</text>
+</view>

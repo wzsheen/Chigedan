@@ -1,0 +1,9 @@
+<view class="welcome-page {{uiThemeClass}}" style="{{viewportHeight ? 'height:' + viewportHeight + 'px' : ''}}">
+  <view class="welcome-halo" aria-hidden="true"></view>
+  <view class="welcome-brand" wx:if="{{!birthdayVideo}}">
+    <image data-asset="logo" bindload="handleAssetReady" binderror="handleAssetReady" class="welcome-logo" src="/assets/compat/brand-logo.png" mode="aspectFit" aria-label="吃个蛋 Logo" />
+    <image data-asset="slogan" bindload="handleAssetReady" binderror="handleAssetReady" class="welcome-slogan" src="/assets/slogan-welcome.png" mode="aspectFit" aria-label="记录每一餐，吃出更好的自己" />
+  </view>
+  <view class="welcome-loading" wx:if="{{!navigationError}}" aria-hidden="true"><view></view><view></view><view></view></view>
+  <button wx:else class="welcome-retry" bindtap="enterHome">进入首页</button>
+</view>

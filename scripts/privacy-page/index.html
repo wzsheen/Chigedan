@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>隐私保护说明 · 吃个蛋</title>
+<meta name="description" content="吃个蛋 的隐私保护说明：记录留在本机，AI 服务由你选择。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://wzsheen.github.io/Chigedan/privacy-page/">
+<style>
+:root{--bg:#fffbef;--ink:#3f3328;--muted:#8a765c;--head:#5e4520;--line:#eadfc6;--accent:#a76b11}
+@media (prefers-color-scheme:dark){:root{--bg:#171410;--ink:#e6ded0;--muted:#a89a85;--head:#f0d9a8;--line:#382f25;--accent:#e0a94f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.78 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-text-size-adjust:100%}
+main{max-width:720px;margin:0 auto;padding:36px 20px 64px}
+h1{font-size:24px;line-height:1.4;margin:0 0 10px;color:var(--head);font-weight:600}
+h2{font-size:17px;line-height:1.5;margin:0 0 12px;color:var(--head);font-weight:600}
+p{margin:0 0 12px}
+.meta{color:var(--muted);font-size:14px;margin:0}
+.summary{margin:22px 0 6px;padding:10px 0 10px 14px;border-left:3px solid var(--accent);color:var(--muted);font-size:15px}
+section{padding:26px 0 4px;border-top:1px solid var(--line)}
+footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.wrap{padding-bottom:8px}
+</style>
+</head>
+<body>
+<main class="wrap">
+    <header>
+        <h1>隐私保护说明</h1>
+        <p class="meta">更新及生效日期：2026年11月4日</p>
+    </header>
+    <p class="summary">记录留在本机，AI 服务由你选择。使用前，请了解信息的用途和去向。</p>
+    <section>
+        <h2>一、适用范围与联系方式</h2>
+        <p>本说明适用于「吃个蛋」小程序当前提供的饮食记录、身体数据管理、饮水记录与可选 AI 服务。开发维护者为 Leon，隐私问题可通过 <a href="mailto:401013861@qq.com">401013861@qq.com</a> 联系。</p>
+        <p>我们按照实际功能说明信息的用途和去向。微信平台及你自行选择的 AI 服务商，也可能依据各自的隐私规则处理相关信息。</p>
+    </section>
+    <section>
+        <h2>二、你填写的信息及用途</h2>
+        <p>你主动填写的食物名称、数量、热量、营养素、用餐日期、餐次及备注，用于饮食记录与营养结构参考；个人食物记忆用于后续匹配。</p>
+        <p>你填写的身高、体重、年龄、性别、目标及活动偏好，用于 BMI、热量目标、趋势和饮食搭配参考；饮水记录用于统计饮水进度。昵称、头像及使用偏好用于个性化展示。</p>
+        <p>身体及饮食信息可能涉及健康隐私，请按实际需要填写。上述计算在本机进行，不会因为填写身体档案而自动发送给 AI 服务商；这些参考不构成医疗诊断。</p>
+    </section>
+    <section>
+        <h2>三、本机存储与安全</h2>
+        <p>饮食、身体、饮水记录及设置保存在本机，不进行云同步，也不用于广告投放或出售。使用内置 AI 时，当次请求会经过云端处理，具体见第五节。</p>
+        <p>自选头像会复制到小程序本地文件目录；录音可能保留在本机供回听或关联记录。照片、录音等临时文件还可能受微信缓存机制管理。</p>
+        <p>本地存储不等同于独立加密保险箱，设备安全、微信环境或系统清理可能影响数据的保密性和可用性。请妥善保管设备，并按需备份。</p>
+    </section>
+    <section>
+        <h2>四、可选权限与剪贴板</h2>
+        <p>只有在你拍照记餐、选择头像或录制语音时，才使用相机、相册或麦克风等相关能力；权限由微信和系统管理。拒绝这些权限不影响手动记餐。</p>
+        <p>主动从剪贴板导入时，会读取你选择导入的文本；主动导出或复制邮箱、来源、服务商页面地址时，会写入相应文本。小程序不会为饮食分析持续读取剪贴板、通讯录或地理位置。</p>
+        <p>你可以在微信的小程序设置或系统设置中管理权限。撤回权限不自动删除已有记录。</p>
+    </section>
+    <section>
+        <h2>五、AI 服务会发送什么</h2>
+        <p>视觉识别、语音识别和营养估算可分别启用。你可以选择内置服务，也可以自行配置服务。仅保存自配设置不会自动上传照片、录音或调用识别。</p>
+        <p>使用内置 AI 时，当次照片、录音或估算所需的食物与份量信息会发往 Supabase，由云端转交模型服务商处理。云端使用匿名会话标识记录用量，用于计算每日使用额度。</p>
+        <p>使用自配服务时，拍照识别会向你配置的视觉服务发送选定照片及识别提示，语音识别会向你配置的语音服务发送录音及必要的模型参数。语音转写后的本地匹配不会自动上传全部饮食记录或身体档案。</p>
+        <p>你主动点击营养估算，或已启动营养估算后遇到语音中本地无法匹配且有明确份量的食物时，会将相关食物名称、单位和估算提示发送到独立配置的营养估算服务，不发送原录音、照片或身体档案。获取模型或测试连接会访问你配置的服务地址，并可能发送测试文本、模型信息及用于鉴权的 API Key。</p>
+        <p>识别和估算结果需由你核对并保存。使用时请避免拍入、录入与记餐无关的身份、联系方式或他人信息。</p>
+    </section>
+    <section>
+        <h2>六、服务商、API Key 与境外处理</h2>
+        <p>自配服务的接收方由你在「AI 服务」中填写的地址决定。自配 API Key 保存在本机，并随相关请求发往该地址用于验证身份。请填写可信的服务地址。</p>
+        <p>第三方可能记录请求、网络信息及上传内容，其保存期限、训练用途、删除渠道和处理地域以该服务商的规则与账号设置为准。本小程序不能代替第三方承诺不留存，也不能代其删除已接收的信息。</p>
+        <p>部分国内外服务可能在境外处理信息。使用前请了解所选服务商的隐私与数据政策；不愿向第三方发送内容时，可以停止 AI 服务并使用本地手动记录。</p>
+    </section>
+    <section>
+        <h2>七、保存期限与删除范围</h2>
+        <p>本机记录和个人食物记忆用于持续记账，在你主动删除、清空相关数据或微信清理小程序数据前保留；微信及系统也可能清理缓存或临时文件。更换设备后不会自动恢复。</p>
+        <p>「数据管理」的清空操作按页面提示删除记录、目标、档案等本机数据，不等同于清除全部 AI 配置、头像文件或媒体缓存。AI 配置请在「AI 服务」中分别清除，头像可在个人资料中重置。需要全面清理本机文件与设置时，可使用微信提供的小程序数据清理功能。</p>
+        <p>停止 AI 服务只阻止后续相关调用，不删除已经发出的请求或第三方保存的内容。外部备份文件和剪贴板副本需要你自行管理和删除。</p>
+    </section>
+    <section>
+        <h2>八、查阅、更正、导出与撤回</h2>
+        <p>你可以在记录、身体与饮水页面查阅相关信息，通过现有编辑入口更正，或删除错误记录后重新填写。可在「数据管理」导出、导入备份或清空相关数据。</p>
+        <p>JSON 备份包含页面说明的饮食、身体、饮水、目标及个人食物数据，不包含 AI Key；备份可能涉及健康隐私，请自行决定保存和分享对象。</p>
+        <p>你可以停止或清除 AI 服务、撤回相机和麦克风权限，继续使用不依赖这些能力的功能。如有隐私问题，可通过本页邮箱联系；开发者无法直接读取或恢复仅存于你本机的记录。</p>
+    </section>
+    <section>
+        <h2>九、未成年人</h2>
+        <p>未成年人请在监护人指导下使用；未满十四周岁的用户应由监护人阅读并同意适用的信息处理规则。请勿在未经监护人同意的情况下向第三方 AI 服务发送儿童个人信息。</p>
+        <p>BMI、热量目标与饮食建议属于一般参考，不应据此自行安排儿童减重或替代专业指导。</p>
+    </section>
+    <section>
+        <h2>十、说明更新</h2>
+        <p>功能或数据处理方式发生变化时，我们会相应更新本说明。若未来新增云同步、收集用途或第三方传输范围，会在相关功能使用前告知，并根据适用要求取得授权；本说明不替代微信的平台隐私授权。</p>
+    </section>
+    <footer>
+        <p>本页内容与 吃个蛋 App 内「关于与隐私 → 隐私保护说明」一致。</p>
+        <p>开发维护者：Leon · <a href="mailto:401013861@qq.com">401013861@qq.com</a></p>
+        <p>如对本说明有疑问，可通过上方邮箱联系开发者。</p>
+    </footer>
+</main>
+</body>
+</html>

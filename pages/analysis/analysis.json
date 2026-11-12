@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "饮食趋势",
+  "usingComponents": {
+    "app-dock": "/components/app-dock/app-dock",
+    "body-editor": "/components/body-editor/body-editor"
+  }
+}

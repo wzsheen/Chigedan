@@ -1,0 +1,23 @@
+<view class="learn-page {{uiThemeClass}}">
+  <block wx:if="{{!article}}">
+    <view class="learn-heading"><text class="learn-title">饮食科普</text><text class="learn-sub">把饮食知识，变成日常的小习惯。</text></view>
+    <input class="learn-search" placeholder="搜索想了解的饮食知识" value="{{query}}" bindinput="handleSearch" />
+    <view class="learn-hero" data-id="plate" bindtap="handleArticle"><view class="hero-copy"><text class="hero-kicker">蛋仔轻课堂</text><text class="hero-title">好好吃饭
+入门课</text><text class="hero-desc">从一餐开始，认识日常的营养。</text><text class="hero-start">开始阅读　→</text></view><image class="lesson-mascot" src="/assets/mascot/adjust-0.png" mode="aspectFit" /><view class="read-progress"><text>已读 {{readCount}} / {{totalCount}} 篇</text><view><view style="width:{{readProgress}}%;"></view></view></view></view>
+    <scroll-view class="category-scroll" scroll-x><view class="category-row"><view class="learn-category {{category === item ? 'category-on' : ''}}" wx:for="{{categories}}" wx:key="*this" data-category="{{item}}" bindtap="handleCategory">{{item}}</view></view></scroll-view>
+    <view class="lesson-list"><view class="lesson-row" wx:for="{{articles}}" wx:key="id" data-id="{{item.id}}" bindtap="handleArticle"><view class="lesson-icon lesson-photo"><image class="article-thumb" src="{{item.cover}}" mode="aspectFill" /></view><view class="lesson-copy"><text class="lesson-title">{{item.title}}</text><text class="lesson-summary">{{item.summary}}</text><text class="lesson-meta">{{item.category}} · {{item.minutes}} 分钟 <text wx:if="{{item.read}}"> · 已读</text></text></view><text class="lesson-arrow">›</text></view></view>
+    <text class="learn-empty" wx:if="{{articles.length === 0}}">暂时没有找到，换个关键词试试。</text><text class="learn-note">一般饮食知识，结合自身情况阅读。每篇文章均保留参考来源。</text>
+  </block>
+  <block wx:else>
+    <view class="article-back" bindtap="handleCloseArticle">‹ 全部科普</view>
+    <text class="article-meta">{{article.category}} · {{article.minutes}} 分钟阅读</text><text class="article-title">{{article.title}}</text>
+    <view class="lesson-intro"><image src="/assets/mascot/adjust-0.png" mode="aspectFit" /><view><text class="intro-label">一句话重点</text><text class="intro-text">{{article.summary}}</text></view></view>
+    <view class="article-cover"><image src="{{article.cover}}" mode="widthFix" aria-label="{{article.title}}主题图解" /></view>
+    <view class="lesson-step" wx:for="{{article.steps}}" wx:key="number"><view class="step-heading"><text class="step-number">{{item.number}}</text><text class="step-title">{{item.title}}</text></view><view class="step-body"><text class="step-paragraph" wx:for="{{item.paragraphs}}" wx:for-item="paragraph" wx:key="*this" selectable>{{paragraph}}</text></view></view>
+    <view class="quiz-card" wx:if="{{article.quiz}}"><text class="quiz-heading">小测试</text><text class="quiz-question">{{article.quiz[0]}}</text><view class="quiz-option {{quizIndex === index ? (index === article.quiz[2] ? 'quiz-correct' : 'quiz-wrong') : ''}}" wx:for="{{article.quiz[1]}}" wx:key="*this" data-index="{{index}}" bindtap="handleQuiz"><text class="quiz-letter">{{index === 0 ? 'A' : 'B'}}</text><text class="quiz-answer">{{item}}</text><text wx:if="{{quizIndex === index}}" class="quiz-result">{{index === article.quiz[2] ? '✓' : '×'}}</text></view><view class="quiz-reveal" bindtap="handleReveal">{{quizRevealed ? '收起解析 −' : '查看解析 ＋'}}</view><text wx:if="{{quizRevealed}}" class="quiz-explanation">{{quizIndex === article.quiz[2] ? '答对了！' : '再看看上面的重点。'}} {{article.sections[0][1]}}</text></view>
+    <view class="mark-read" bindtap="handleRead" aria-role="button">我读完了 ✓</view>
+    <view class="next-lesson" data-id="{{nextArticle.id}}" bindtap="handleArticle"><view><text class="next-label">下一篇</text><text>{{nextArticle.title}}</text></view><text>›</text></view>
+    <view class="sources"><view class="source-heading" bindtap="handleSources"><text>参考来源与核对日期</text><text>{{showSources ? '−' : '＋'}}</text></view><view wx:if="{{showSources}}"><view class="source-row" wx:for="{{article.references}}" wx:key="url"><text>{{item.name}}</text><view class="source-copy" bindtap="handleCopySource" data-index="{{index}}">复制来源链接 ↗</view></view><text class="source-date">内容核对：{{article.reviewedAt}}</text></view></view>
+    <text class="learn-note">文字为来源内容的简要整理，供日常了解与记录参考。</text>
+  </block>
+</view>

@@ -1,0 +1,32 @@
+{
+  "title": "隐私保护说明",
+  "confirm": "同意并继续",
+  "cancel": "暂不同意",
+  "message": "「吃个蛋」的记录只保存在本机，不上传、不出售。拍照、录音、换头像时才会申请相机、相册、麦克风权限，拒绝仍可手动记录。开启 AI 识别后，当次照片或录音会发给你选择的服务商处理（内置服务经云端转交），自配 API Key 只存本机。完整说明见__a__，建议先读一遍再决定。",
+  "messageLinks": {
+    "__a__": {
+      "text": "《隐私保护说明》",
+      "url": "https://wzsheen.github.io/Chigedan/privacy-page/",
+      "showExternal": true
+    }
+  },
+  "styles": {
+    "borderRadius": 14,
+    "backgroundColor": "#FFFDF6",
+    "title": {
+      "color": "#5E4520"
+    },
+    "message": {
+      "color": "#6F5A3C"
+    },
+    "messageLinks": {
+      "color": "#A76B11"
+    },
+    "confirmButton": {
+      "color": "#A76B11"
+    },
+    "cancelButton": {
+      "color": "#9A8770"
+    }
+  }
+}

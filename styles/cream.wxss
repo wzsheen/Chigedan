@@ -1,0 +1,32 @@
+/* C / 奶油日光: shared surfaces with an opaque fallback for older WeChat clients. */
+.page { color: #432b1d; }
+.page .page-title { color: #432b1d; font-size: 40rpx; font-weight: 650; letter-spacing: 1rpx; }
+.page .page-sub { color: #9b8874; line-height: 1.65; }
+.page .card,.page .state-card,.page .profile-card,.page .group,.page .overview-card,.page .summary-card,.page .hero-card,.page .day-card,.page .archive,.page .height-card,.page .recipe-card { background: rgba(255,254,248,.60); border: 2rpx solid rgba(255,255,255,.68); border-radius: 32rpx; box-shadow: 0 10rpx 32rpx rgba(130,96,28,.045); }
+.page .group { overflow: hidden; }
+.page .row { min-height: 104rpx; border-color: #f4edde; }
+.page .row-icon { color: #957332; background: #fff6d7; }
+.page .group-title { color: #9b8874; margin-top: 34rpx; margin-bottom: 14rpx; }
+.page .primary-button,.page .action-primary,.page .btn-primary,.page .recipe-add,.page .state-btn { color: #503312; background: linear-gradient(125deg,#ffe795,#ffcf36); box-shadow: 0 6rpx 18rpx rgba(225,173,27,.15); border: 1rpx solid #ffeda4; }
+.page .range-tabs,.page .segment { background: #f5efdf; border-radius: 24rpx; }
+.page .range-tab-active,.page .segment-active { background: #ffdf76; color: #5b3c18; box-shadow: 0 3rpx 12rpx rgba(160,112,22,.06); }
+.page .meal-chip-active,.page .kp-chip-on { background: #fff0b5; color: #714b13; border-color: #f4ce63; }
+.page .food-chip,.page .suggestion-item { background: #fff8e5; color: #7b5c31; }
+.page .error-tip,.page .form-error { color: #b65a40; }
+.page .row-label,.page .card-title { color: #51331e; }
+.page .field-label { color: #796449; }
+.page .field-group { margin-bottom: 28rpx; }
+.page .actions { padding-bottom: env(safe-area-inset-bottom); }
+.page .action-button { border-radius: 24rpx; }
+.page .keypad-panel,.page .note-panel,.page .avatar-sheet { background: rgba(255,253,244,.88); border: 2rpx solid #fff; border-radius: 38rpx 38rpx 0 0; box-shadow: 0 -8rpx 48rpx rgba(109,78,27,.09); }
+.page .sheet-mask,.page .pop-mask,.page .avatar-mask { background: rgba(78,58,23,.2); }
+.page .kp-close { color: #8a6a2c; }
+.page .entry-heading { margin-bottom: 30rpx; }
+.page .entry-heading text { display: block; }
+.page .entry-btn { background: #fff9e6; border: 2rpx solid #fff; border-radius: 28rpx; box-shadow: 0 8rpx 24rpx rgba(130,96,28,.05); }
+.page .voice-status { padding: 22rpx 26rpx; margin-bottom: 26rpx; border-radius: 22rpx; color: #856322; background: #fff2c1; font-size: 24rpx; line-height: 1.7; }
+.page .voice-chip { background: #fff4cc; border-color: #ffe7a0; }
+.page .about-logo { width: 150rpx; height: 150rpx; border-radius: 30rpx; margin-bottom: 20rpx; }
+.page .brand-name { font-family: EggHand, 'Kaiti SC', KaiTi, cursive; color: #4a2919; }
+.page .meal-add-btn,.page .note-btn-primary { background: linear-gradient(125deg,#ffe795,#ffcf36); color: #503312; box-shadow: 0 6rpx 18rpx rgba(225,173,27,.15); }
+.page .chip-active,.page .meal-tab-active,.page .water-save,.page .water-custom-save,.page .custom-btn,.page .save-btn,.page .save-button,.page .pop-btn-primary,.page .empty-btn { background: linear-gradient(125deg,#ffe795,#ffcf36); color: #503312; }

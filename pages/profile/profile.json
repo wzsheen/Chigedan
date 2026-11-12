@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#fffbef",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#fffbef",
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "app-dock": "/components/app-dock/app-dock"
+  }
+}

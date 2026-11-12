@@ -1,0 +1,4 @@
+@import "../../styles/cream.wxss";
+.page{padding:40rpx 28rpx}.card{padding:32rpx;margin-top:30rpx}.message,.description{display:block}.message{font-size:30rpx;font-weight:600}.description{font-size:26rpx;color:#a18b6e;line-height:1.8;margin:24rpx 0 36rpx}.primary-button{font-size:28rpx}.back{text-align:center;padding:28rpx;color:#a48040;font-size:26rpx}
+
+@import "../../styles/surfaces.wxss";

@@ -1,0 +1,73 @@
+<view class="page {{uiThemeClass}}">
+    <view class="header">
+        <text class="page-title">健康档案</text>
+        <text class="page-sub">只读档案 · 由你的记录自动汇总</text>
+    </view>
+
+    <block wx:if="{{record !== null}}">
+        <view class="archive">
+            <view class="archive-top">
+                <view class="stamp">
+                    <text class="stamp-text">HR</text>
+                </view>
+                <view class="archive-id">
+                    <view class="name-line">
+                        <text class="archive-name">{{record.name}}</text>
+                        <text class="readonly-tag">只读</text>
+                    </view>
+                    <text class="archive-line">{{record.headline}}</text>
+                </view>
+            </view>
+
+            <view class="archive-bottom">
+                <view class="archive-no">
+                    <text class="no-label">档案编号</text>
+                    <text class="no-value">{{record.serial}}</text>
+                    <text class="no-date">建档 {{record.issuedText}} · 生成 {{record.generatedText}}</text>
+                </view>
+                <view class="archive-bmi">
+                    <text class="bmi-value">{{record.bmiText}}</text>
+                    <text class="bmi-label">BMI · {{record.bmiLevel}}</text>
+                </view>
+            </view>
+        </view>
+
+        <block wx:for="{{record.sections}}" wx:for-item="section" wx:for-index="sectionIndex" wx:key="title">
+            <text class="group-title">{{section.title}}</text>
+            <view class="group">
+                <view
+                    class="line {{rowIndex === section.rows.length - 1 ? 'line-last' : ''}}"
+                    wx:for="{{section.rows}}"
+                    wx:for-item="row"
+                    wx:for-index="rowIndex"
+                    wx:key="label"
+                >
+                    <text class="line-label">{{row.label}}</text>
+                    <text class="line-value">{{row.value}}</text>
+                </view>
+            </view>
+        </block>
+
+        <view class="notice">
+            <text class="notice-tag">不可修改</text>
+            <text class="notice-text" wx:for="{{record.note}}" wx:key="*this">{{item}}</text>
+        </view>
+
+        <view class="actions">
+            <button class="action-button action-primary" bindtap="handleExport" loading="{{exporting}}" disabled="{{exporting}}">
+                {{exporting ? '正在生成…' : '导出 PDF 档案'}}
+            </button>
+            <text class="action-hint" wx:if="{{exportHint !== ''}}">{{exportHint}}</text>
+            <textarea
+                class="fallback"
+                wx:if="{{showFallback}}"
+                value="{{fallbackText}}"
+                maxlength="-1"
+                auto-height
+                disabled
+            />
+        </view>
+    </block>
+
+    <canvas type="2d" id="archiveCanvas" class="archive-canvas"></canvas>
+</view>

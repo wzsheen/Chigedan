@@ -1,0 +1,91 @@
+<view class="page {{uiThemeClass}}">
+    <view class="hero-card">
+        <view class="water-ring" style="{{ringStyle}}">
+            <view class="water-ring-inner">
+                <text class="water-total">{{totalText}}</text>
+                <text class="water-unit">ml / 目标 {{goalText}}</text>
+                <text class="water-percent">{{percentText}}</text>
+            </view>
+        </view>
+        <text class="water-status">{{statusText}}</text>
+    </view>
+
+    <view class="error-tip" wx:if="{{formError !== ''}}">{{formError}}</view>
+
+    <view class="card">
+        <text class="card-title">快速加水</text>
+        <view class="quick-grid">
+            <view
+                class="quick-btn"
+                wx:for="{{quickOptions}}"
+                wx:key="*this"
+                data-ml="{{item}}"
+                bindtap="handleQuickAdd"
+                hover-class="quick-btn-hover"
+                hover-stay-time="80"
+            >
+                <text class="quick-btn-text">+{{item}}</text>
+                <text class="quick-btn-unit">ml</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="card">
+        <text class="card-title">自定义水量</text>
+        <view class="custom-row">
+            <view class="custom-box">
+                <input
+                    class="custom-input"
+                    type="digit"
+                    placeholder="输入毫升数"
+                    value="{{customMl}}"
+                    bindinput="handleCustomInput"
+                    maxlength="4"
+                />
+                <text class="custom-unit">ml</text>
+            </view>
+            <view class="custom-btn" bindtap="handleCustomAdd" hover-class="custom-btn-hover" hover-stay-time="80">
+                <text>添加</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="card">
+        <text class="card-title">每日目标</text>
+        <view class="goal-row">
+            <view class="goal-step" bindtap="handleGoalMinus"><text>−</text></view>
+            <view class="goal-box">
+                <input class="goal-input" type="digit" value="{{goalInput}}" bindinput="handleGoalInput" maxlength="4" />
+                <text class="goal-unit">ml</text>
+            </view>
+            <view class="goal-step" bindtap="handleGoalPlus"><text>+</text></view>
+            <view class="goal-save" bindtap="handleGoalSave" hover-class="goal-save-hover" hover-stay-time="80">
+                <text>保存</text>
+            </view>
+        </view>
+        <text class="card-hint">成人每日建议 1500–2000ml，运动或天热可适当增加</text>
+    </view>
+
+    <view class="card">
+        <view class="card-head">
+            <text class="card-title">今日记录</text>
+            <text class="entry-clear {{pendingClear ? 'entry-clear-active' : ''}}" wx:if="{{hasEntries}}" bindtap="handleClear">{{pendingClear ? '确认清空' : '清空'}}</text>
+        </view>
+
+        <view class="entry-empty" wx:if="{{!hasEntries}}">
+            <text>还没有记录，点上面的按钮加一杯</text>
+        </view>
+
+        <view class="entry-item" wx:for="{{entries}}" wx:key="ts">
+            <text class="entry-time">{{item.timeText}}</text>
+            <text class="entry-ml">{{item.mlText}}</text>
+            <view
+                class="entry-del trash-action {{pendingDeleteTs === item.ts ? 'entry-del-active' : ''}}"
+                data-ts="{{item.ts}}"
+                catchtap="handleDelete"
+             aria-role="button" aria-label="{{pendingDeleteTs === item.ts ? '再次点击确认删除' : '删除记录'}}"><image src="/assets/icons/line-trash{{pendingDeleteTs === item.ts ? '-confirm' : ''}}.png" mode="aspectFit" aria-hidden="true" /></view>
+        </view>
+    </view>
+
+    <view class="page-bottom-space"></view>
+</view>

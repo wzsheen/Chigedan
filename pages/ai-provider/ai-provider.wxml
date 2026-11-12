@@ -1,0 +1,5 @@
+<web-view wx:if="{{url && !failed}}" src="{{url}}" binderror="handleError"></web-view>
+<view wx:else class="page {{uiThemeClass}}">
+  <text class="page-title">前往 {{name}}</text>
+  <view class="card"><text class="message">暂时无法在微信内打开官方页面</text><text class="description">你可以复制官方页面地址，在浏览器中打开，获取 API Key 后返回填写。</text><button bindtap="handleCopy" class="primary-button">复制官方页面地址</button><view class="back" bindtap="handleBack">返回 AI 服务</view></view>
+</view>
