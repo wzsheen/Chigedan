@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
-  "notes": "- 新增 AI 模型自动切换，修复内置 AI 不可用和云函数 503 错误。\n- 修复拍照、语音识别失败和识别结果数值错乱的问题。\n- 修复 AI 调用失败未退还次数、新用户额度显示为 0 的问题。\n- 新增 22,162 条菜肴数据，移除 51 条不适合直接食用的生食材。\n- 新增菜品同义词搜索，修复搜索卡顿并优化结果列表展示。\n- 新增「分享你的变化」，可用实际记录生成分享页，分享饮食记录、体重变化、腰围变化和热量趋势。\n- 修复食物列表中热量被错误放大的问题。\n- 热量和三大营养素统一按每 100 克填写，热量支持千焦和千卡切换。\n- 热量、蛋白质、碳水和脂肪四项均可随时修改。",
-  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.1.0/Chigedan-v0.1.0-android.apk"
+  "version": "0.1.1",
+  "notes": "- 优化使用体验；\n - 修复若干问题。",
+  "downloadUrl": "https://gh-proxy.com/https://github.com/wzsheen/Chigedan/releases/download/v0.1.1/Chigedan-v0.1.1-android.apk"
 }
